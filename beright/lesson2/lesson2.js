@@ -308,7 +308,7 @@ const lesson2Part3Data = {
         practice: {
             title: '💪 תרגול: הבחנה בין צלילי תנועות',
             activities: [
-                { id: "l2p3_pa1", type: "mcq", q: "איזו מילה יוצאת דופן מבחינת צליל התנועה המרכזי (כפי שלמדנו)?", options: ["<span class='ltr'>Ron (אוֹ)</span>", "<span class='ltr'>Noa (אוֹ)</span>", "<span class='ltr'>Ruth (אוּ)</span>"], correct: "<span class='ltr'>Ruth (אוּ)</span>" },
+                { id: "l2p3_pa1", type: "mcq", q: "איזו מילה יוצאת דופן מבחינת צליל התנועה המרכזי (כפי שלמדנו)?", options: ["Ron (אוֹ)", "Noa (אוֹ)", "Ruth (אוּ)"], correct: "Ruth (אוּ)"},
                 { id: "l2p3_pa2", type: "fill_in_blank", q: "במילה <span class='ltr'>red</span> (אדום), אות התנועה היא __ והצליל שלה הוא כמו __ בעברית.", correct: "e, סגול", placeholder: "האות, התנועה (למשל: e, סגול)" },
                 { id: "l2p3_pa3", q: "לאיזו קבוצת צליל שייכת המילה <span class='ltr'>Adam</span>?", options: ["צליל אֶ (eh) של E", "צליל אַ (ah) של A", "צליל אִי (ee) של I"], correct: "צליל אַ (ah) של A", type: "mcq" }
             ],
