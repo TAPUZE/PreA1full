@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeRight! - חלק 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-sky-100 min-h-screen flex flex-col items-center p-4">
+    <a href="#" class="logout-button" onclick="handleLogout()">Logout</a>
+
+    <div class="round-container">
+        <header>
+            <h1 class="title-bounce">
+                BeRight! <span class="text-2xl md:text-3xl text-amber-500">🚀</span>
+            </h1>
+            <p class="text-lg text-slate-600 mt-2">המסע שלכם לכיבוש הפועל "To Be" באנגלית!</p>
+        </header>
+
+        <div id="lesson-selector-links" class="flex justify-center gap-2 mb-6">
+            <a href="part1.html" class="btn-part-selector-link">חלק 1</a>
+            <a href="part2.html" class="btn-part-selector-link">חלק 2</a>
+            <a href="part3.html" class="btn-part-selector-link">חלק 3</a>
+            <a href="part4.html" class="btn-part-selector-link">חלק 4</a>
+        </div>
+
+        <div id="round-info" class="mb-6 text-center">
+            <h2 class="text-2xl font-semibold text-blue-600" id="part-title">טוען כותרת חלק...</h2>
+            <div class="progress-bar-container mt-2">
+                <div id="progress-bar" class="progress-bar">0%</div>
+            </div>
+        </div>
+
+        <div id="tabs" class="flex justify-center gap-2 mb-6">
+            <button id="tab-study" class="tab-button tab-inactive">📖 לימוד</button>
+            <button id="tab-test" class="tab-button tab-inactive">📝 מבחן</button>
+            <button id="tab-practice" class="tab-button tab-inactive">💪 תרגול</button>
+            <a href="../progress.html?lesson=4" id="tab-progress" class="tab-button tab-inactive">📊 ההתקדמות</a>
+        </div>
+
+        <main id="content-area" class="card">
+            <p>טוען תוכן...</p>
+        </main>
+
+        <!-- Add placeholders for test and practice modes -->
+        <section id="test-mode">
+            <h2>מצב מבחן</h2>
+            <p>תוכן המבחן יתווסף כאן.</p>
+        </section>
+
+        <section id="practice-mode">
+            <h2>מצב תרגול</h2>
+            <p>תוכן התרגול יתווסף כאן.</p>
+        </section>
+
+        <div id="navigation-buttons" class="mt-6 flex justify-between items-center hidden">
+            <button id="prev-btn" class="btn btn-secondary hidden">הקודם</button>
+            <button id="next-btn" class="btn btn-primary">הבא</button>
+        </div>
+
+        <div class="text-center mt-6">
+            <a href="lesson4-menu.html" class="btn btn-secondary">חזרה לתפריט השיעור</a>
+        </div>
+
+        <div class="text-center mt-6">
+            <button class="btn btn-primary" onclick="generateLessonReport(4, 2)">View Lesson Report</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Data for Lesson 2 ---
+        const lesson2StudySteps = [
+            {
+                title: "חלק 2: 'To Be' עם רבים ושלילה",
+                content: `<p class="mb-4 text-lg">בשיעור הזה נלמד איך להשתמש ב-'to be' עם רבים (אנחנו, הם/הן) ואיך ליצור משפטי שלילה (להגיד "לא").</p>`
+            },
+            {
+                title: `צורות רבים: <span class="ltr">We are</span>`,
+                content: `<div class="p-4 bg-sky-50 rounded-lg mb-2">
+                            <h5 class="font-semibold text-blue-700 mb-1">אנחנו <span class="text-xl text-amber-500 font-mono">➔</span> <strong class="ltr">We are</strong></h5>
+                            <p class="text-slate-700">דוגמה: <span class="ltr">We <strong>are</strong> friends.</span> (אנחנו חברים)</p>
+                          </div>
+                          <div class="study-interactive-check">
+                            <p class="text-sm font-medium text-slate-700">השלם: <span class="ltr">We ___ a team.</span></p>
+                            <input type="text" id="r2s2_check" class="ltr border border-gray-300 p-1 rounded-md my-1 w-20 text-center">
+                            <button class="btn btn-secondary btn-sm text-xs" onclick="checkStudyStepAnswer('r2s2_check', 'are', 'r2s2_feedback')">בדוק</button>
+                            <div id="r2s2_feedback" class="text-sm mt-1"></div>
+                          </div>`
+            },
+            {
+                title: `צורות רבים: <span class="ltr">You are</span> (אתם/אתן)`,
+                content: `<div class="p-4 bg-sky-50 rounded-lg mb-2">
+                            <h5 class="font-semibold text-blue-700 mb-1">אתם/אתן <span class="text-xl text-amber-500 font-mono">➔</span> <strong class="ltr">You are</strong></h5>
+                            <p class="text-slate-700">דוגמה: <span class="ltr">You <strong>are</strong> students.</span> (אתם תלמידים)</p>
+                            <p class="text-sm text-slate-600 mt-1">(המילה <span class="ltr">'You'</span> משמשת גם ליחיד וגם לרבים באנגלית!)</p>
+                          </div>`
+            },
+            {
+                title: `צורות רבים: <span class="ltr">They are</span>`,
+                content: `<div class="p-4 bg-sky-50 rounded-lg mb-2">
+                            <h5 class="font-semibold text-blue-700 mb-1">הם/הן <span class="text-xl text-amber-500 font-mono">➔</span> <strong class="ltr">They are</strong></h5>
+                            <p class="text-slate-700">דוגמה: <span class="ltr">They <strong>are</strong> happy.</span> (הם שמחים)</p>
+                          </div>
+                           <div class="study-interactive-check">
+                            <p class="text-sm font-medium text-slate-700">בחר את המילה הנכונה: <span class="ltr">The cats (they) ___ sleeping.</span></p>
+                            <button class="btn btn-secondary btn-sm text-xs mx-1" onclick="checkStudyStepAnswerDirect('is', 'are', 'r2s4_feedback')">is</button>
+                            <button class="btn btn-secondary btn-sm text-xs mx-1" onclick="checkStudyStepAnswerDirect('are', 'are', 'r2s4_feedback')">are</button>
+                            <div id="r2s4_feedback" class="text-sm mt-1 feedback-animation"></div>
+                          </div>`
+            },
+            {
+                title: "יצירת שלילה (Making Negatives)",
+                content: `<div class="p-4 bg-rose-50 rounded-lg">
+                            <h5 class="font-semibold text-rose-700 mb-1">איך אומרים "לא"?</h5>
+                            <p class="mb-2 text-slate-700">כדי ליצור שלילה, פשוט מוסיפים <strong class="ltr">not</strong> אחרי הפועל 'to be'.</p>
+                            <p class="text-slate-700">לדוגמה: <span class="ltr">I am tired.</span> <span class="text-rose-500 font-mono">➔</span> <span class="ltr">I am <strong>not</strong> tired.</span></p>
+                          </div>`
+            },
+            {
+                title: "דוגמאות לשלילה וקיצורים",
+                content: `<div class="p-4 bg-rose-50 rounded-lg">
+                            <ul class="list-disc list-inside space-y-2 text-slate-700 ltr">
+                                <li>I am <strong>not</strong> tired. (קיצור: I<strong>'m not</strong> tired)</li>
+                                <li>He is <strong>not</strong> here. (קיצורים: He<strong>'s not</strong> here / He <strong>isn't</strong> here)</li>
+                                <li>She is <strong>not</strong> a nurse. (קיצורים: She<strong>'s not</strong> a nurse / She <strong>isn't</strong> a nurse)</li>
+                                <li>It is <strong>not</strong> cold. (קיצורים: It<strong>'s not</strong> cold / It <strong>isn't</strong> cold)</li>
+                                <li>We are <strong>not</strong> ready. (קיצורים: We<strong>'re not</strong> ready / We <strong>aren't</strong> ready)</li>
+                                <li>You are <strong>not</strong> late. (קיצורים: You<strong>'re not</strong> late / You <strong>aren't</strong> late)</li>
+                                <li>They are <strong>not</strong> from here. (קיצורים: They<strong>'re not</strong> from here / They <strong>aren't</strong> from here)</li>
+                            </ul>
+                            <p class="mt-2 text-sm text-slate-600">שימו לב לקיצורים הנפוצים לשלילה! <strong class="ltr">'isn't'</strong> (is not) ו-<strong class="ltr">'aren't'</strong> (are not) מאוד שימושיים.</p>
+                          </div>
+                          <div class="study-interactive-check">
+                            <p class="text-sm font-medium text-slate-700">השלם את הקיצור: <span class="ltr">They are not friends.</span> <span class="text-rose-500 font-mono">➔</span> <span class="ltr">They ___ friends.</span></p>
+                            <input type="text" id="r2s6_check" class="ltr border border-gray-300 p-1 rounded-md my-1 w-20 text-center" placeholder="aren't">
+                            <button class="btn btn-secondary btn-sm text-xs" onclick="checkStudyStepAnswer('r2s6_check', 'aren\\'t', 'r2s6_feedback')">בדוק</button>
+                            <div id="r2s6_feedback" class="text-sm mt-1"></div>
+                          </div>`
+            },
+            {
+                title: "Using 'are' in Questions",
+                content: `<p class='text-lg'>Learn how to use 'are' in questions with examples:</p>
+                          <ul>
+                              <li>Are they your friends?</li>
+                              <li>Are we ready?</li>
+                              <li>Are you coming?</li>
+                          </ul>
+                          <div class='study-interactive-check'>
+                              <p>Fill in the blank: <span class='ltr'>___ they happy?</span></p>
+                              <input type='text' id='r2s7_check' class='ltr' placeholder='Are'>
+                              <button onclick="checkStudyStepAnswer('r2s7_check', 'Are', 'r2s7_feedback')">Check</button>
+                              <div id='r2s7_feedback'></div>
+                          </div>`
+            },
+            {
+                title: "סיימנו ללמוד על רבים ושלילה!",
+                content: `<p class="mt-4 text-lg text-green-600 font-semibold">מצוין! עכשיו אתם יודעים להשתמש ב-'to be' עם רבים וליצור משפטי שלילה.</p>
+                          <p class="text-slate-700">מוכנים למבחן?</p>`
+            }
+        ];
+
+        const part2StudySteps = [
+            {
+                title: "חלק 2: 'To Be' עם רבים ושלילה",
+                content: `<p class="mb-4 text-lg">בשיעור הזה נלמד איך להשתמש ב-'to be' עם רבים (אנחנו, הם/הן) ואיך ליצור משפטי שלילה (להגיד "לא").</p>`
+            },
+            {
+                title: `צורות רבים: <span class="ltr">We are</span>`,
+                content: `<div class="p-4 bg-sky-50 rounded-lg mb-2">
+                            <h5 class="font-semibold text-blue-700 mb-1">אנחנו <span class="text-xl text-amber-500 font-mono">➔</span> <strong class="ltr">We are</strong></h5>
+                            <p class="text-slate-700">דוגמה: <span class="ltr">We <strong>are</strong> friends.</span> (אנחנו חברים)</p>
+                          </div>
+                          <div class="study-interactive-check">
+                            <p class="text-sm font-medium text-slate-700">השלם: <span class="ltr">We ___ a team.</span></p>
+                            <input type="text" id="r2s2_check" class="ltr border border-gray-300 p-1 rounded-md my-1 w-20 text-center">
+                            <button class="btn btn-secondary btn-sm text-xs" onclick="checkStudyStepAnswer('r2s2_check', 'are', 'r2s2_feedback')">בדוק</button>
+                            <div id="r2s2_feedback" class="text-sm mt-1"></div>
+                          </div>`
+            }
+        ];
+
+        const part2Data = {
+            title: 'חלק 2: רבים ושלילה (We, They, Not)',
+            sections: {
+                study: {
+                    title: '📖 לימוד: "To Be" עם רבים ושלילה',
+                    steps: part2StudySteps
+                }
+            }
+        };
+
+        const allPartsMasterData = {
+            1: { title: 'חלק 1: יסודות - "To Be" בהווה (אני, אתה, הוא/היא/זה)' },
+            2: { title: part2Data.title },
+            3: { title: 'חלק 3: שאלות (Are you? Where is he?)' },
+            4: { title: 'חלק 4: "To Be" בעבר (Was, Were)' }
+        };
+    </script>
+    <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const part2Data = {
+                title: 'Lesson 4: Example Data - Part 2',
+                sections: {
+                    study: { steps: ['Step 1', 'Step 2'] },
+                    test: { questions: ['Question 1', 'Question 2'] },
+                    practice: { activities: ['Activity 1', 'Activity 2'] }
+                }
+            };
+            initializeCurrentPage('part', 2, part2Data, allPartsMasterData);
+        });
+
+        function generateLessonReport(lessonNumber, partNumber) {
+            const progressData = JSON.parse(localStorage.getItem('progressData')) || {};
+            const lessonReport = progressData[lessonNumber]?.[partNumber] || {};
+
+            const reportContainer = document.getElementById('content-area');
+            reportContainer.innerHTML = '<h2>Lesson Report</h2>';
+
+            if (Object.keys(lessonReport).length === 0) {
+                reportContainer.innerHTML += '<p>No progress data available for this lesson part.</p>';
+            } else {
+                for (const [key, value] of Object.entries(lessonReport)) {
+                    reportContainer.innerHTML += `<p>${key}: ${value}</p>`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

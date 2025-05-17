@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeRight! - Lesson 4 Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        body {
+            font-family: 'Assistant', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f9ff;
+            padding: 1rem;
+        }
+        .main-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        .nav-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.1s;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.125rem;
+            border: 1px solid transparent;
+        }
+        .nav-button:active {
+            transform: scale(0.98);
+        }
+        .btn-lesson {
+            background-color: #fbbf24;
+            color: #78350f;
+            border-color: #f59e0b;
+        }
+        .btn-lesson:hover {
+            background-color: #f59e0b;
+        }
+        .btn-progress-link {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .btn-progress-link:hover {
+            background-color: #2563eb;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(-5%); animation-timing-function: cubic-bezier(0.8,0,1,1); }
+            50% { transform: translateY(0); animation-timing-function: cubic-bezier(0,0,0.2,1); }
+        }
+        .title-bounce {
+            animation: bounce 1s infinite;
+        }
+        header h1 {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            font-weight: bold;
+            color: #1d4ed8;
+        }
+        @media (min-width: 768px) {
+            header h1 {
+                font-size: 3rem;
+                line-height: 1;
+            }
+            header h1 .text-2xl {
+                font-size: 1.875rem;
+            }
+        }
+        header p.subtitle {
+            font-size: 1.125rem;
+            color: #475569;
+            margin-top: 0.5rem;
+        }
+        header p.instruction {
+            font-size: 1rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header class="text-center mb-8">
+            <h1 class="title-bounce">
+                BeRight! <span class="text-2xl md:text-3xl text-amber-500">🚀</span>
+            </h1>
+            <p class="subtitle">המסע שלכם לכיבוש הפועל "To Be" באנגלית!</p>
+            <p class="instruction">בחרו חלק כדי להמשיך ללמוד.</p>
+        </header>
+
+        <nav id="main-navigation">
+            <a href="part1.html" class="nav-button btn-lesson">חלק 1: יסודות</a>
+            <a href="part2.html" class="nav-button btn-lesson">חלק 2: רבים ושלילה</a>
+            <a href="part3.html" class="nav-button btn-lesson">חלק 3: שאלות</a>
+            <a href="part4.html" class="nav-button btn-lesson">חלק 4: עבר (Was, Were)</a>
+            <hr class="my-6 border-slate-300">
+            <a href="../progress.html?lesson=4" class="nav-button btn-progress-link">📊 צפו בהתקדמות הכוללת</a>
+        </nav>
+
+        <div class="text-center mt-6">
+            <a href="../main-menu.html" class="btn btn-secondary">חזרה לתפריט הראשי</a>
+        </div>
+
+        <div class="text-center mt-6">
+            <button class="btn btn-primary" onclick="generateFullReport()">View Full Report</button>
+        </div>
+
+        <div id="content-area" class="mt-6"></div>
+    </div>
+
+    <script>
+    function generateFullReport() {
+        const progressData = JSON.parse(localStorage.getItem('progressData')) || {};
+        const reportContainer = document.getElementById('content-area');
+        reportContainer.innerHTML = '<h2>Full Report</h2>';
+
+        if (Object.keys(progressData).length === 0) {
+            reportContainer.innerHTML += '<p>No progress data available.</p>';
+        } else {
+            for (const [lesson, parts] of Object.entries(progressData)) {
+                reportContainer.innerHTML += `<h3>Lesson ${lesson}</h3>`;
+                for (const [part, data] of Object.entries(parts)) {
+                    reportContainer.innerHTML += `<p>Part ${part}: ${JSON.stringify(data)}</p>`;
+                }
+            }
+        }
+    }
+    </script>
+</body>
+</html>

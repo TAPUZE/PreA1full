@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeRight! - שיעור 2 - תפריט</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        body {
+            font-family: 'Assistant', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f9ff; /* Light sky blue background */
+            padding: 1rem;
+            margin: 0;
+        }
+        .main-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); /* Soft shadow */
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        .nav-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.1s;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.125rem; /* text-lg */
+            border: 1px solid transparent;
+        }
+        .nav-button:active {
+            transform: scale(0.98);
+        }
+        .btn-lesson {
+            background-color: #fbbf24; /* Amber 400 */
+            color: #78350f; /* Amber 900 */
+            border-color: #f59e0b; /* Amber 500 */
+        }
+        .btn-lesson:hover {
+            background-color: #f59e0b; /* Amber 500 */
+        }
+        .btn-progress-link {
+            background-color: #3b82f6; /* Blue 500 */
+            color: white;
+        }
+        .btn-progress-link:hover {
+            background-color: #2563eb; /* Blue 600 */
+        }
+        /* Main header style from style.css might apply, adding specific overrides if needed */
+        header h1 {
+            font-size: 2.25rem; /* text-4xl */
+            line-height: 2.5rem;
+            font-weight: bold;
+            color: #1d4ed8; /* text-blue-700 from style.css */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            header h1 {
+                font-size: 3rem; /* md:text-5xl */
+                line-height: 1;
+            }
+            header h1 .text-2xl { /* For the rocket emoji span */
+                font-size: 1.875rem; /* md:text-3xl */
+            }
+        }
+        .title-bounce { /* Ensure this animation is defined in style.css or here */
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce { /* Copied from previous menu for self-containment if not in style.css */
+            0%, 100% { transform: translateY(-5%); animation-timing-function: cubic-bezier(0.8,0,1,1); }
+            50% { transform: translateY(0); animation-timing-function: cubic-bezier(0,0,0.2,1); }
+        }
+        header p.subtitle {
+            font-size: 1.125rem; /* text-lg */
+            color: #475569; /* text-slate-600 */
+            margin-top: 0.5rem; /* mt-2 */
+        }
+        header p.instruction {
+            font-size: 1rem; /* text-base */
+            color: #64748b; /* text-slate-500 */
+            margin-top: 0.25rem; /* mt-1 */
+        }
+        /* Report styling */
+        #report-content-area {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb; /* gray-50 */
+            border: 1px solid #e5e7eb; /* gray-200 */
+            border-radius: 0.5rem;
+            text-align: right;
+        }
+        #report-content-area h3 {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600;
+            color: #1e40af; /* blue-800 */
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #dbeafe; /* blue-200 */
+            padding-bottom: 0.25rem;
+        }
+        #report-content-area .report-item {
+            margin-bottom: 0.75rem;
+            padding: 0.5rem;
+            background-color: #eff6ff; /* blue-50 */
+            border-radius: 0.25rem;
+        }
+        #report-content-area .report-item strong {
+            color: #1d4ed8; /* blue-700 */
+        }
+        #report-content-area pre {
+            background-color: #e0e7ff; /* indigo-100 */
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem; /* text-sm */
+            white-space: pre-wrap;
+            word-break: break-all;
+            direction: ltr; /* JSON data is usually LTR */
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header class="text-center mb-8">
+            <h1 class="title-bounce">
+                BeRight! <span class="text-2xl md:text-3xl text-amber-500">🚀</span>
+            </h1>
+            <p class="subtitle">שיעור 2: צלילי תנועות בסיסיים וקריאה עם מילים מוכרות</p>
+            <p class="instruction">בחרו חלק מהשיעור כדי להתחיל או להמשיך ללמוד.</p>
+        </header>
+
+        <nav id="main-navigation">
+            <a href="../lesson2/part1.html" class="nav-button btn-lesson">חלק 1: הכרת 5 צלילי התנועות הבסיסיים</a>
+            <a href="../lesson2/part2.html" class="nav-button btn-lesson">חלק 2: צלילי תנועות נוספים</a>
+            <a href="../lesson2/part3.html" class="nav-button btn-lesson">חלק 3: קריאת מילים קצרות</a>
+            <a href="../lesson2/part4.html" class="nav-button btn-lesson">חלק 4: סיכום ותרגול קריאה</a>
+            
+            <hr class="my-6 border-slate-300">
+            
+            <a href="../progress.html?lesson=L2" class="nav-button btn-progress-link">📊 צפו בהתקדמות בשיעור 2</a>
+        </nav>
+
+        <div class="text-center mt-6">
+            <a href="../index.html" class="btn btn-secondary">חזרה לתפריט ראשי</a>
+        </div>
+        
+        <div class="text-center mt-6">
+            <button class="btn btn-primary" onclick="generateLesson2Report()">הצג דוח התקדמות לשיעור 2</button>
+        </div>
+
+        <div id="report-content-area" class="hidden"></div>
+    </div>
+
+    <script>
+        function initializeUserNameForMenu() {
+            let userName = localStorage.getItem('userName');
+            if (!userName) {
+                // Optional: redirect or prompt if critical for menu function
+                // For a menu, usually just means progress report won't be personalized
+                console.warn("User name not found. Progress report will not be personalized.");
+            }
+            return userName;
+        }
+        
+        function generateLesson2Report() {
+            const userName = initializeUserNameForMenu();
+            const reportContainer = document.getElementById('report-content-area');
+            reportContainer.innerHTML = ''; // Clear previous report
+            reportContainer.classList.remove('hidden');
+
+            if (!userName) {
+                reportContainer.innerHTML = '<p class="text-red-500">לא זוהה שם משתמש. לא ניתן להציג דוח התקדמות.</p>';
+                return;
+            }
+
+            const userPath = `path_${userName}`;
+            const pathDataString = localStorage.getItem(userPath);
+
+            if (!pathDataString) {
+                reportContainer.innerHTML = '<p>לא נמצאו נתוני התקדמות עבור המשתמש.</p>';
+                return;
+            }
+
+            try {
+                const pathData = JSON.parse(pathDataString);
+                const allUserProgress = pathData.progress; // This is the partProgressData object
+
+                if (!allUserProgress || Object.keys(allUserProgress).length === 0) {
+                    reportContainer.innerHTML += '<p>אין נתוני התקדמות זמינים.</p>';
+                    return;
+                }
+
+                let reportHTML = '<h3 class="mb-3">דוח התקדמות לשיעור 2</h3>';
+                let foundLesson2Data = false;
+
+                // Filter for parts belonging to Lesson 2 (e.g., keys like "L2P1", "L2P2", etc.)
+                for (const partId in allUserProgress) {
+                    if (allUserProgress.hasOwnProperty(partId) && partId.toUpperCase().startsWith("L2P")) {
+                        foundLesson2Data = true;
+                        const partDetail = allUserProgress[partId];
+                        const title = partDetail.title || `חלק ${partId}`;
+                        const timeSpent = partDetail.timeSpentInMs ? Math.round(partDetail.timeSpentInMs / 60000) : 0; // In minutes
+                        const score = partDetail.testScore !== null ? `${partDetail.testScore.toFixed(0)}%` : 'לא נבחן';
+                        
+                        reportHTML += `<div class="report-item">`;
+                        reportHTML += `<p><strong>${title}</strong></p>`;
+                        reportHTML += `<p class="text-sm text-slate-600">זמן שהושקע: כ-${timeSpent} דקות</p>`;
+                        reportHTML += `<p class="text-sm text-slate-600">ציון במבחן: ${score}</p>`;
+                        if (partDetail.mistakesDetail && partDetail.mistakesDetail.length > 0) {
+                            reportHTML += `<p class="text-sm text-slate-600">טעויות במבחן: ${partDetail.mistakesDetail.length}</p>`;
+                        }
+                        // Optionally, display more details from partDetail
+                        // reportHTML += `<pre>${JSON.stringify(partDetail, null, 2)}</pre>`;
+                        reportHTML += `</div>`;
+                    }
+                }
+
+                if (!foundLesson2Data) {
+                    reportHTML += '<p>לא נמצאו נתוני התקדמות ספציפיים לשיעור 2.</p>';
+                }
+                reportContainer.innerHTML = reportHTML;
+
+            } catch (error) {
+                console.error("Error parsing or displaying report data:", error);
+                reportContainer.innerHTML = '<p class="text-red-500">שגיאה בטעינת דוח ההתקדמות.</p>';
+            }
+        }
+        
+        // Call on load if needed, e.g., to display username
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeUserNameForMenu(); // To potentially display username if there was a placeholder for it.
+        });
+    </script>
+</body>
+</html>

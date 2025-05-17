@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeRight! - חלק 3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-sky-100 min-h-screen flex flex-col items-center p-4">
+
+    <div class="round-container">
+        <header>
+            <h1 class="title-bounce">
+                BeRight! <span class="text-2xl md:text-3xl text-amber-500">🚀</span>
+            </h1>
+            <p class="text-lg text-slate-600 mt-2">המסע שלכם לכיבוש הפועל "To Be" באנגלית!</p>
+        </header>
+
+        <div id="lesson-selector-links" class="flex justify-center gap-2 mb-6">
+            <a href="part1.html" class="btn-part-selector-link">חלק 1</a>
+            <a href="part2.html" class="btn-part-selector-link">חלק 2</a>
+            <a href="part3.html" class="btn-part-selector-link">חלק 3</a>
+            <a href="part4.html" class="btn-part-selector-link">חלק 4</a>
+        </div>
+
+        <div id="round-info" class="mb-6 text-center">
+            <h2 class="text-2xl font-semibold text-blue-600" id="part-title">טוען כותרת חלק...</h2>
+            <div class="progress-bar-container mt-2">
+                <div id="progress-bar" class="progress-bar">0%</</div>
+            </div>
+        </div>
+
+        <div id="tabs" class="flex justify-center gap-2 mb-6">
+            <button id="tab-study" class="tab-button tab-inactive">📖 לימוד</button>
+            <button id="tab-test" class="tab-button tab-inactive">📝 מבחן</button>
+            <button id="tab-practice" class="tab-button tab-inactive">💪 תרגול</button>
+            <a href="../progress.html?lesson=4" id="tab-progress" class="tab-button tab-inactive">📊 ההתקדמות</a>
+        </div>
+
+        <main id="content-area" class="card">
+            <p>טוען תוכן...</p>
+        </main>
+
+        <div id="navigation-buttons" class="mt-6 flex justify-between items-center hidden">
+            <button id="prev-btn" class="btn btn-secondary hidden">הקודם</button>
+            <button id="next-btn" class="btn btn-primary">הבא</button>
+        </div>
+
+        <div class="text-center mt-6">
+            <a href="lesson4-menu.html" class="btn btn-secondary">חזרה לתפריט השיעור</a>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Data for Part 3 ---
+        const part3StudySteps = [
+            {
+                title: "חלק 3: שאילת שאלות עם 'To Be'",
+                content: `<p class="mb-4 text-lg">הפעם נלמד איך לשאול שאלות עם 'to be'. זה קל! לרוב פשוט מחליפים את הסדר של הנושא והפועל.</p>`
+            },
+            {
+                title: "שאלות כן/לא: איך יוצרים?",
+                content: `<div class="p-4 bg-teal-50 rounded-lg mb-2">
+                            <h5 class="font-semibold text-teal-700 mb-1">היפוך סדר!</h5>
+                            <p class="mb-2 text-slate-700">כדי ליצור שאלת כן/לא, הפכו את הסדר של הנושא (subject) והפועל 'to be' (verb):</p>
+                            <ul class="list-disc list-inside space-y-2 text-slate-700">
+                                <li>משפט: <span class="ltr">You <strong>are</strong> happy.</span> <span class="text-xl text-amber-500 font-mono">➔</span> שאלה: <span class="ltr"><strong>Are</strong> you happy?</span> (האם אתה שמח?)</li>
+                                <li>משפט: <span class="ltr">He <strong>is</strong> a doctor.</span> <span class="text-xl text-amber-500 font-mono">➔</span> שאלה: <span class="ltr"><strong>Is</strong> he a doctor?</span> (האם הוא רופא?)</li>
+                                <li>משפט: <span class="ltr">They <strong>are</strong> students.</span> <span class="text-xl text-amber-500 font-mono">➔</span> שאלה: <span class="ltr"><strong>Are</strong> they students?</span> (האם הם תלמידים?)</li>
+                            </ul>
+                          </div>
+                          <div class="study-interactive-check">
+                            <p class="text-sm font-medium text-slate-700">הפוך לשאלה: <span class="ltr">She is tired.</span></p>
+                            <input type="text" id="r3s2_check" class="ltr border border-gray-300 p-1 rounded-md my-1 w-40 text-center" placeholder="Is she tired?">
+                            <button class="btn btn-secondary btn-sm text-xs" onclick="checkStudyStepAnswer('r3s2_check', 'Is she tired?', 'r3s2_feedback')">בדוק</button>
+                            <div id="r3s2_feedback" class="text-sm mt-1"></div>
+                          </div>`
+            },
+            {
+                title: "תשובות קצרות לשאלות כן/לא",
+                content: `<div class="p-4 bg-teal-50 rounded-lg mb-2">
+                            <h5 class="font-semibold text-teal-600 mt-3 mb-1">איך עונים בקצרה?</h5>
+                            <ul class="list-disc list-inside space-y-1 text-slate-700 ltr">
+                                <li>Are you happy? <span class="text-lg text-amber-500 font-mono">➔</span> Yes, I am. / No, I'm not.</li>
+                                <li>Is he a doctor? <span class="text-lg text-amber-500 font-mono">➔</span> Yes, he is. / No, he isn't.</li>
+                                <li>Are they students? <span class="text-lg text-amber-500 font-mono">➔</span> Yes, they are. / No, they aren't.</li>
+                            </ul>
+                            <p class="text-sm text-slate-600 mt-2">שימו לב שאנחנו חוזרים על הפועל 'to be' בתשובה הקצרה.</p>
+                          </div>`
+            },
+            {
+                title: "שאלות Wh- (מידע)",
+                content: `<div class="p-4 bg-purple-50 rounded-lg">
+                            <h5 class="font-semibold text-purple-700 mb-1">מתי משתמשים בשאלות Wh-?</h5>
+                            <p class="mb-2 text-slate-700">שאלות אלו מתחילות במילות שאלה כמו <span class="ltr">Who, What, Where, When, Why, How</span>, ומבקשות מידע ספציפי (לא רק כן/לא).</p>
+                            <p class="mb-2 text-slate-700">המבנה הוא: <strong class="ltr">Wh-word + 'to be' + subject ...?</strong></p>
+                          </div>`
+            },
+            {
+                title: "דוגמאות לשאלות Wh-",
+                content: `<div class="p-4 bg-purple-50 rounded-lg">
+                            <ul class="list-disc list-inside space-y-2 text-slate-700 ltr">
+                                <li><strong>Who</strong> are you? (מי אתה?)</li>
+                                <li><strong>What</strong> is this? (מה זה?)</li>
+                                <li><strong>Where</strong> is she? (איפה היא?)</li>
+                                <li><strong>When</strong> is the party? (מתי המסיבה?)</li>
+                                <li><strong>Why</strong> are they late? (למה הם מאחרים?)</li>
+                                <li><strong>How</strong> are you? (איך אתה? / מה שלומך?)</li>
+                            </ul>
+                          </div>
+                          <div class="study-interactive-check">
+                            <p class="text-sm font-medium text-slate-700">השלם את מילת השאלה: <span class="ltr">___ is your name?</span></p>
+                            <input type="text" id="r3s5_check" class="ltr border border-gray-300 p-1 rounded-md my-1 w-20 text-center" placeholder="What">
+                            <button class="btn btn-secondary btn-sm text-xs" onclick="checkStudyStepAnswer('r3s5_check', 'What', 'r3s5_feedback')">בדוק</button>
+                            <div id="r3s5_feedback" class="text-sm mt-1"></div>
+                          </div>`
+            },
+            {
+                title: "Forming WH- Questions",
+                content: `<p class='text-lg'>Learn how to form WH- questions:</p>
+                          <ul>
+                              <li>What is your name?</li>
+                              <li>Where are you from?</li>
+                              <li>Why are they late?</li>
+                          </ul>
+                          <div class='study-interactive-check'>
+                              <p>Fill in the blank: <span class='ltr'>___ is your favorite color?</span></p>
+                              <input type='text' id='r3s6_check' class='ltr' placeholder='What'>
+                              <button onclick="checkStudyStepAnswer('r3s6_check', 'What', 'r3s6_feedback')">Check</button>
+                              <div id='r3s6_feedback'></div>
+                          </div>`
+            },
+            {
+                title: "סיימנו ללמוד על שאלות!",
+                content: `<p class="mt-4 text-lg text-green-600 font-semibold">נהדר! עכשיו אתם יודעים לשאול שאלות כן/לא ושאלות Wh- עם 'to be'.</p>
+                          <p class="text-slate-700">מוכנים לבדוק את הידע במבחן?</p>`
+            }
+        ];
+
+        const part3Data = {
+            title: 'חלק 3: שאלות (Are you? Where is he?)',
+            sections: {
+                study: {
+                    title: '📖 לימוד: שאילת שאלות עם "To Be"',
+                    steps: part3StudySteps
+                },
+                test: {
+                    title: '📝 מבחן: שאילת שאלות',
+                    questions: [
+                        { id: "r3_tq1", q: "הפוך לשאלה: <span class='ltr'>She is tired.</span>", options: ["<span class='ltr'>Is she tired?</span>", "<span class='ltr'>She is tired?</span>", "<span class='ltr'>Tired is she?</span>"], correct: "<span class='ltr'>Is she tired?</span>", type: "mcq" },
+                        { id: "r3_tq2", q: "השלם: <span class='ltr'>___ are you from? (I am from Israel)</span>", options: ["What", "Who", "Where"], correct: "Where", type: "mcq", sentenceParts: ["", " are you from?"] },
+                        { id: "r3_tq3", q: "בחר את התשובה הקצרה הנכונה: <span class='ltr'>Are they ready?</span>", options: ["<span class='ltr'>Yes, they are.</span>", "<span class='ltr'>Yes, they ready.</span>", "<span class='ltr'>No, they is not.</span>"], correct: "<span class='ltr'>Yes, they are.</span>", type: "mcq" },
+                        { id: "r3_tq4", q: "השלם: <span class='ltr'>___ is your name?</span>", correct: "What", type: "fill_single", placeholder: "מילת שאלה", sentenceParts: ["", " is your name?"] },
+                        { id: "r3_tq5", q: "<span class='ltr'>Why ___ they late?</span>", options: ["is", "are", "am"], correct: "are", type: "mcq" },
+                        { id: "r3_tq6", q: "<span class='ltr'>What ___ your name?</span>", options: ["is", "are", "am"], correct: "is", type: "mcq" }
+                    ],
+                    instructions: "בחרו או השלימו את התשובה הנכונה."
+                },
+                practice: {
+                    title: '💪 תרגול: שאילת שאלות',
+                    activities: [
+                        { id: "r3_pa1", type: "sentencebuilder", q: "סדר לשאלה: <span class='ltr'>(you / are / How / ?)</span>", words: ["How", "are", "you", "?"], correctSentence: "How are you ?" },
+                        { id: "r3_pa2", type: "fill_in_blank", q: "השלם: <span class='ltr'>___ he your brother? (Yes, he is.)</span>", correct: "Is", placeholder: "Am/Is/Are" },
+                        { id: "r3_pa3", type: "sentencebuilder", q: "Arrange: <span class='ltr'>(is / What / your name)</span>", words: ["What", "is", "your name"], correctSentence: "What is your name" },
+                        { id: "r3_pa4", type: "fill_in_blank", q: "Complete: <span class='ltr'>Where ___ you from?</span>", correct: "are", placeholder: "is/are" }
+                    ],
+                    instructions: "תרגלו יצירת שאלות ותשובות."
+                }
+            }
+        };
+        const allPartsMasterData = {
+            1: { title: 'חלק 1: יסודות - "To Be" בהווה (אני, אתה, הוא/היא/זה)' },
+            2: { title: 'חלק 2: רבים ושלילה (We, They, Not)' },
+            3: { title: part3Data.title },
+            4: { title: 'חלק 4: "To Be" בעבר (Was, Were)' }
+        };
+    </script>
+    <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCurrentPage('part', 3, part3Data, allPartsMasterData);
+        });
+    </script>
+</body>
+</html>

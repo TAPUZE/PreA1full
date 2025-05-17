@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שיעור 1 - חלק 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-sky-100 min-h-screen flex flex-col items-center p-4">
+    <a href="#" class="logout-button" onclick="handleLogout()">Logout</a>
+
+    <div class="round-container">
+        <header>
+            <h1 class="title-bounce">
+                שיעור 1: אותיות האלפבית <span class="text-2xl md:text-3xl text-amber-500">🚀</span>
+            </h1>
+            <p class="text-lg text-slate-600 mt-2">לימוד אותיות H-N</p>
+        </header>
+
+        <div id="part-selector-links" class="flex justify-center gap-2 mb-6">
+            <a href="part1.html" class="btn-part-selector-link">חלק 1</a>
+            <a href="part2.html" class="btn-part-selector-link">חלק 2</a>
+            <a href="part3.html" class="btn-part-selector-link">חלק 3</a>
+            <a href="part4.html" class="btn-part-selector-link">חלק 4</a>
+        </div>
+
+        <div id="round-info" class="mb-6 text-center">
+            <h2 class="text-2xl font-semibold text-blue-600" id="part-title">טוען כותרת חלק...</h2>
+            <div class="progress-bar-container mt-2">
+                <div id="progress-bar" class="progress-bar">0%</div>
+            </div>
+        </div>
+
+        <div id="tabs" class="flex justify-center gap-2 mb-6">
+            <button id="tab-study" class="tab-button tab-inactive">📖 לימוד</button>
+            <button id="tab-test" class="tab-button tab-inactive">📝 מבחן</button>
+            <button id="tab-practice" class="tab-button tab-inactive">💪 תרגול</button>
+            <a href="../progress.html?lesson=1" id="tab-progress" class="tab-button tab-inactive">📊 ההתקדמות</a>
+        </div>
+
+        <main id="content-area" class="card">
+            <p>טוען תוכן...</p>
+        </main>
+
+        <div id="navigation-buttons" class="mt-6 flex justify-between items-center hidden">
+            <button id="prev-btn" class="btn btn-secondary hidden">הקודם</button>
+            <button id="next-btn" class="btn btn-primary">הבא</button>
+        </div>
+
+        <div class="text-center mt-6">
+            <a href="lesson1-menu.html" class="btn btn-secondary">חזרה לתפריט השיעור</a>
+        </div>
+    </div>
+
+    <script>
+        const part2Data = {
+            title: 'חלק 2: יסודות - לימוד אותיות H-N',
+            sections: {
+                study: {
+                    title: '📖 לימוד: אותיות H-N',
+                    steps: [
+                        {
+                            title: 'ברוכים הבאים לחלק 2!',
+                            content: `<p class="mb-2 text-lg">נתחיל עם לימוד האותיות H-N.</p>
+                                      <p class="mb-3 text-slate-700">למדו את הצלילים והצורות של האותיות האלו.</p>`
+                        },
+                        {
+                            title: 'האות H',
+                            content: `<p class="text-slate-700">האות H נשמעת כמו "ה".</p>`
+                        },
+                        {
+                            title: 'האות I',
+                            content: `<p class="text-slate-700">האות I נשמעת כמו "אִי".</p>`
+                        },
+                        {
+                            title: 'האות J',
+                            content: `<p class="text-slate-700">האות J נשמעת כמו "ג".</p>`
+                        },
+                        {
+                            title: 'האות K',
+                            content: `<p class="text-slate-700">האות K נשמעת כמו "ק".</p>`
+                        },
+                        {
+                            title: 'האות L',
+                            content: `<p class="text-slate-700">האות L נשמעת כמו "ל".</p>`
+                        },
+                        {
+                            title: 'האות M',
+                            content: `<p class="text-slate-700">האות M נשמעת כמו "מ".</p>`
+                        },
+                        {
+                            title: 'האות N',
+                            content: `<p class="text-slate-700">האות N נשמעת כמו "נ".</p>`
+                        }
+                    ]
+                },
+                test: {
+                    title: '📝 מבחן: אותיות H-N',
+                    questions: [
+                        { id: "l1_tq1", q: "איזו אות נשמעת כמו 'ה'?", options: ["H", "I", "J"], correct: "H", type: "mcq" },
+                        { id: "l1_tq2", q: "איזו אות נשמעת כמו 'אִי'?", options: ["H", "I", "J"], correct: "I", type: "mcq" },
+                        { id: "l1_tq3", q: "איזו אות נשמעת כמו 'ג'?", options: ["J", "K", "L"], correct: "J", type: "mcq" },
+                        { id: "l1_tq4", q: "איזו אות נשמעת כמו 'ק'?", options: ["K", "L", "M"], correct: "K", type: "mcq" },
+                        { id: "l1_tq5", q: "איזו אות נשמעת כמו 'ל'?", options: ["L", "M", "N"], correct: "L", type: "mcq" },
+                        { id: "l1_tq6", q: "איזו אות נשמעת כמו 'מ'?", options: ["M", "N", "H"], correct: "M", type: "mcq" },
+                        { id: "l1_tq7", q: "איזו אות נשמעת כמו 'נ'?", options: ["N", "H", "I"], correct: "N", type: "mcq" }
+                    ]
+                },
+                practice: {
+                    title: '💪 תרגול: אותיות H-N',
+                    activities: [
+                        { id: "l1_pa1", type: "fill_in_blank", q: "השלם את האות החסרה: <span class=\"ltr\">_ouse</span>", correct: "H", placeholder: "H" },
+                        { id: "l1_pa2", type: "drag_and_drop", q: "התאם את המילים לאותיות שלהן.", pairs: [
+                            { drag: "House", drop: "H" },
+                            { drag: "Ice", drop: "I" },
+                            { drag: "Jelly", drop: "J" },
+                            { drag: "Kite", drop: "K" },
+                            { drag: "Lion", drop: "L" },
+                            { drag: "Monkey", drop: "M" },
+                            { drag: "Nest", drop: "N" }
+                        ]}
+                    ]
+                }
+            }
+        };
+
+        const allPartsMasterData = {
+            1: { title: 'חלק 1: יסודות - לימוד אותיות A-G' },
+            2: { title: part2Data.title },
+            3: { title: 'חלק 3: יסודות - לימוד אותיות O-T' },
+            4: { title: 'חלק 4: יסודות - לימוד אותיות U-Z' }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCurrentPage('part', 2, part2Data, allPartsMasterData);
+        });
+    </script>
+    <script src="../script.js"></script>
+</body>
+</html>

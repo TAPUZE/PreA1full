@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeRight! - סיכום התקדמות</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Styles for the print-friendly report window (PDF via browser print) */
+        .printable-report-body {
+            font-family: 'Assistant', Arial, sans-serif !important; /* Ensure Assistant is prioritized */
+            direction: rtl !important;
+            margin: 20px !important;
+            background-color: #fff !important;
+            color: #000 !important;
+            -webkit-print-color-adjust: exact !important; /* Ensures background colors and images are printed */
+            print-color-adjust: exact !important;
+        }
+        .printable-report-body h1, .printable-report-body h2, .printable-report-body h3, .printable-report-body h4, .printable-report-body h5 {
+            color: #1e3a8a !important; 
+            margin-bottom: 8px !important;
+            margin-top: 15px !important;
+        }
+        .printable-report-body h1 {
+            font-size: 24px !important;
+            text-align: center !important;
+            border-bottom: 2px solid #3b82f6 !important; 
+            padding-bottom: 10px !important;
+            margin-bottom: 20px !important;
+        }
+        .printable-report-body h2 {
+            font-size: 20px !important;
+            border-bottom: 1px solid #93c5fd !important; 
+            padding-bottom: 5px !important;
+        }
+        .printable-report-body h3 {
+            font-size: 16px !important;
+            color: #1d4ed8 !important; 
+        }
+        .printable-report-body p {
+            margin-bottom: 5px !important;
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+        }
+        .printable-report-body table.progress-table-print {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            margin-bottom: 20px !important;
+            font-size: 12px !important;
+        }
+        .printable-report-body table.progress-table-print th,
+        .printable-report-body table.progress-table-print td {
+            border: 1px solid #ddd !important; 
+            padding: 8px !important;
+            text-align: right !important;
+        }
+        .printable-report-body table.progress-table-print th {
+            background-color: #e0e7ff !important; 
+            font-weight: bold !important;
+        }
+        .printable-report-body .ltr-print { 
+            direction: ltr !important;
+            display: inline-block !important; 
+            text-align: left !important;
+            font-family: Arial, sans-serif !important; /* Ensure LTR parts use a common LTR font */
+        }
+        .printable-report-body .focus-list-print {
+            list-style-type: decimal !important;
+            padding-right: 20px !important; 
+            margin-top: 5px !important;
+        }
+        .printable-report-body .focus-list-print li {
+            margin-bottom: 10px !important; /* Increased spacing */
+            background-color: #fef3c7 !important; 
+            padding: 8px !important; /* Increased padding */
+            border-right: 3px solid #f59e0b !important; 
+            border-radius: 0.25rem !important;
+        }
+         .printable-report-body .focus-list-print li p {
+            margin-bottom: 3px !important; /* Tighter spacing within list item */
+        }
+        .printable-report-body .summary-section-print {
+            background-color: #f3f4f6 !important; 
+            padding: 15px !important;
+            border-radius: 8px !important;
+            margin-bottom: 20px !important;
+        }
+        .printable-report-body .part-details-print { 
+            margin-bottom: 20px !important;
+            page-break-inside: avoid !important;
+        }
+
+
+        @media print { 
+            body * {
+                visibility: hidden !important; 
+            }
+            .print-container, .print-container * {
+                visibility: visible !important; 
+            }
+            .print-container {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+            }
+            .btn-download { 
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-sky-100 min-h-screen flex flex-col items-center p-4">
+    <a href="#" class="logout-button" onclick="handleLogout()">Logout</a>
+    <div class="part-container main-container-progress"> 
+        <header class="text-center mb-6">
+             <h1 class="text-3xl md:text-4xl font-bold text-blue-700">
+                BeRight! - סיכום התקדמות כולל
+            </h1>
+             <a href="index.html" class="btn btn-secondary mt-4 inline-block">חזרה לדף הראשי</a>
+        </header>
+
+        <main id="progress-content-area" class="card">
+            <p>טוען סיכום התקדמות...</p>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="js/progress.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        const PROGRESS_DATA_KEY_PROG = 'beRightAppPartProgressData'; // Updated to match script.js
+        const ALL_PARTS_TITLES_KEY_PROG = 'beRightAppPartTitles'; 
+
+        // English titles for parts (for CSV and potentially other uses)
+        const partTitlesEnglish = {
+            1: 'Part 1: Basics - "To Be" Present (I, You, He/She/It)',
+            2: 'Part 2: Plurals & Negatives (We, They, Not)',
+            3: 'Part 3: Questions (Are you? Where is he?)',
+            4: 'Part 4: "To Be" Past (Was, Were)'
+        };
+
+        function getAllPartTitles() { 
+            try {
+                const storedTitles = localStorage.getItem(ALL_PARTS_TITLES_KEY_PROG);
+                if (storedTitles) return JSON.parse(storedTitles);
+            } catch (e) { console.error("Error parsing part titles from localStorage:", e); }
+            // Fallback Hebrew titles (used for display on this page)
+            return {
+                1: 'חלק 1: יסודות - "To Be" בהווה (אני, אתה, הוא/היא/זה)',
+                2: 'חלק 2: רבים ושלילה (We, They, Not)',
+                3: 'חלק 3: שאלות (Are you? Where is he?)',
+                4: 'חלק 4: "To Be" בעבר (Was, Were)'
+            };
+        }
+        
+        function displayOverallProgress() {
+            const progressContentArea = document.getElementById('progress-content-area');
+            if (!progressContentArea) { console.error("Progress content area not found."); return; }
+
+            let partProgressDataLocal = {}; 
+            try {
+                const storedProgressData = localStorage.getItem(PROGRESS_DATA_KEY_PROG);
+                if (storedProgressData) partProgressDataLocal = JSON.parse(storedProgressData);
+            } catch (e) {
+                console.error("Error parsing progress data from localStorage:", e);
+                progressContentArea.innerHTML = "<p>שגיאה בטעינת נתוני ההתקדמות.</p>";
+                return;
+            }
+            
+            const allPartTitlesLocal = getAllPartTitles(); // These are Hebrew titles for display
+            let overallTotalTimeMs = 0;
+            Object.values(partProgressDataLocal).forEach(lData => { 
+                if (lData && typeof lData.timeSpentInMs === 'number') overallTotalTimeMs += lData.timeSpentInMs;
+            });
+
+            let progressHtml = `<h3 class="text-xl font-semibold mb-4 text-blue-700">📊 סיכום התקדמות</h3>`;
+            progressHtml += `<p class="mb-4 text-slate-700">זמן למידה כולל: <strong>${formatTime(overallTotalTimeMs)}</strong></p>`;
+            progressHtml += `<table class="progress-table"><thead><tr><th>חלק</th><th>זמן שהושקע</th><th>ציון במבחן</th><th>מספר טעויות</th></tr></thead><tbody>`;
+
+            for (let i = 1; i <= 4; i++) { 
+                const partNumStr = String(i); 
+                const lData = partProgressDataLocal[partNumStr]; 
+                const partTitleDisplay = (allPartTitlesLocal && allPartTitlesLocal[partNumStr]) ? allPartTitlesLocal[partNumStr] : (lData && lData.title ? lData.title : `חלק ${partNumStr}`);
+                if (lData && (lData.sectionsAttempted?.study || lData.sectionsAttempted?.test || lData.sectionsAttempted?.practice)) {
+                    progressHtml += `<tr><td>${partTitleDisplay}</td><td>${formatTimeMinutes(lData.timeSpentInMs)}</td><td>${lData.testScore !== null ? lData.testScore.toFixed(0) + '%' : 'לא נערך'}</td><td>${lData.mistakesDetail ? lData.mistakesDetail.length : '0'}</td></tr>`;
+                } else {
+                    progressHtml += `<tr><td>${partTitleDisplay}</td><td colspan="3" class="text-slate-500">טרם התחלת חלק זה</td></tr>`;
+                }
+            }
+            progressHtml += `</tbody></table>`;
+            progressHtml += `<div class="mt-8">`;
+            let hasFocusAreas = false;
+            for (let i = 1; i <= 4; i++) {
+                const partNumStr = String(i); 
+                const lData = partProgressDataLocal[partNumStr]; 
+                const partTitleDisplay = (allPartTitlesLocal && allPartTitlesLocal[partNumStr]) ? allPartTitlesLocal[partNumStr] : (lData && lData.title ? lData.title : `חלק ${partNumStr}`);
+                if (lData && lData.mistakesDetail && lData.mistakesDetail.length > 0) {
+                    if (!hasFocusAreas) {
+                        progressHtml += `<h4 class="text-lg font-semibold text-orange-600 mb-3">נושאים לחיזוק:</h4>`;
+                        hasFocusAreas = true;
+                    }
+                    progressHtml += `<div class="mb-4"><h5 class="font-semibold text-blue-700">${partTitleDisplay}</h5><ul class="focus-area-list">`;
+                    lData.mistakesDetail.forEach(mistake => {
+                        // Assuming mistake object might now contain 'questionText'
+                        const questionDisplay = mistake.questionText ? mistake.questionText.replace(/<[^>]*>?/gm, '') : `ID: ${mistake.questionId || 'לא ידוע'}`;
+                        progressHtml += `<li>
+                                            <p class="text-sm"><strong>שאלה:</strong> ${questionDisplay}</p>
+                                            <p class="text-xs text-red-500">תשובתך: <span class="ltr">${mistake.userAnswer || 'לא נענה'}</span></p>
+                                            <p class="text-xs text-green-600">תשובה נכונה: <span class="ltr">${mistake.correctAnswer}</span></p>
+                                         </li>`;
+                    });
+                    progressHtml += `</ul></div>`;
+                }
+            }
+            if (!hasFocusAreas && Object.keys(partProgressDataLocal).length > 0 && Object.values(partProgressDataLocal).some(ld => ld && ld.testScore !== null)) {
+                 progressHtml += `<p class="text-green-600 font-semibold">כל הכבוד! לא נמצאו טעויות בחלקים שהושלמו עם מבחן.</p>`;
+            } else if (Object.keys(partProgressDataLocal).length === 0 || !Object.values(partProgressDataLocal).some(ld => ld && ld.sectionsAttempted?.test)) {
+                progressHtml += `<p class="text-slate-500">התחל ללמוד ובצע מבחנים כדי לראות אזורים לחיזוק.</p>`;
+            }
+            progressHtml += `</div>`;
+            progressHtml += `<p class="mt-6 text-sm text-slate-600">המשך ללמוד ולהתאמן כדי לשפר את התוצאות שלך!</p>`;
+            progressHtml += `<div class="mt-8 text-center">
+                                <button class="btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg btn-download" onclick="downloadReport('pdf')">📄 הורד דו"ח כ-PDF</button>
+                                <button class="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg btn-download" onclick="downloadReport('csv')">💹 הורד דו"ח כ-Excel (CSV)</button>
+                            </div>`;
+            progressContentArea.innerHTML = progressHtml;
+        }
+
+        function downloadReport(format) {
+            try {
+                if (format === 'pdf') {
+                    generatePdfViaBrowserPrint();
+                } else if (format === 'csv') {
+                    generateEnglishCsvReport();
+                }
+            } catch (error) {
+                console.error("Error during report generation trigger:", error);
+                alert("אירעה שגיאה בעת הפקת הדו\"ח. בדוק את המסוף לפרטים נוספים.");
+            }
+        }
+
+        function generateEnglishCsvReport() {
+            try {
+                const storedProgressData = localStorage.getItem(PROGRESS_DATA_KEY_PROG);
+                const partProgressDataLocal = storedProgressData ? JSON.parse(storedProgressData) : {};
+                
+                let csvContent = "\uFEFF"; // UTF-8 BOM for Excel
+                // Updated CSV Headers for clarity and English only
+                const headers = ["Part Number", "Part Title", "Time Spent (Minutes)", "Test Score (%)", "Number of Mistakes", "Mistake Details (Question | User Answer | Correct Answer)"];
+                csvContent += headers.join(",") + "\r\n";
+
+                for (let i = 1; i <= 4; i++) {
+                    const partNumStr = String(i); 
+                    const lData = partProgressDataLocal[partNumStr]; 
+                    const partTitleEng = partTitlesEnglish[partNumStr] || `Part ${partNumStr}`; 
+                    
+                    let row = [partNumStr, `"${partTitleEng.replace(/"/g, '""')}"`]; 
+
+                    if (lData && (lData.sectionsAttempted?.study || lData.sectionsAttempted?.test || lData.sectionsAttempted?.practice)) {
+                        const timeInMs = lData.timeSpentInMs || 0;
+                        const minutes = Math.floor(timeInMs / 60000);
+                        row.push(minutes); 
+                        row.push(lData.testScore !== null ? lData.testScore.toFixed(0) : 'N/A'); 
+                        const numMistakes = lData.mistakesDetail ? lData.mistakesDetail.length : 0;
+                        row.push(numMistakes);
+                        
+                        const mistakeDetailsCsv = lData.mistakesDetail && lData.mistakesDetail.length > 0
+                            ? lData.mistakesDetail.map(m => {
+                                // Use questionText if available, otherwise questionId
+                                const qText = m.questionText ? m.questionText.replace(/<[^>]*>?/gm, '').replace(/[\n\r,"]/g, ' ') : (m.questionId || 'Unknown ID');
+                                const uAns = m.userAnswer ? String(m.userAnswer).replace(/[\n\r,"]/g, ' ') : 'N/A';
+                                const cAns = m.correctAnswer ? String(m.correctAnswer).replace(/[\n\r,"]/g, ' ') : 'N/A';
+                                // Each part of the mistake is a field, then the whole mistake entry is quoted.
+                                return `"${qText.trim()} | Your: ${uAns.trim()} | Correct: ${cAns.trim()}"`; 
+                              }).join('; ') // Semicolon to separate multiple mistakes if they are in one cell
+                            : "No mistakes";
+                        row.push(`"${mistakeDetailsCsv.replace(/"/g, '""')}"`);
+
+                    } else {
+                        row.push('0', 'N/A', '0', '"Not Started"'); 
+                    }
+                    csvContent += row.join(",") + "\r\n";
+                }
+
+                let overallTotalTimeMs = 0;
+                Object.values(partProgressDataLocal).forEach(lData => { 
+                    if (lData && typeof lData.timeSpentInMs === 'number') overallTotalTimeMs += lData.timeSpentInMs;
+                });
+                csvContent += "\r\n";
+                const overallMinutes = Math.floor(overallTotalTimeMs / 60000);
+                csvContent += `Overall Learning Time (Minutes):,${overallMinutes}\r\n`;
+
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                if (link.download !== undefined) {
+                    const url = URL.createObjectURL(blob);
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", "BeRight_Progress_Report_EN.csv"); 
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                } else {
+                    alert("Your browser does not support direct downloads. Please try a different browser.");
+                }
+            } catch (error) {
+                console.error("Error generating English CSV report:", error);
+                alert("An error occurred while generating the CSV report.");
+            }
+        }
+        
+        function generatePdfViaBrowserPrint() {
+            try {
+                const storedProgressData = localStorage.getItem(PROGRESS_DATA_KEY_PROG);
+                const partProgressDataLocal = storedProgressData ? JSON.parse(storedProgressData) : {}; 
+                const allPartTitlesLocal = getAllPartTitles(); 
+                let overallTotalTimeMs = 0;
+                Object.values(partProgressDataLocal).forEach(lData => { 
+                    if (lData && typeof lData.timeSpentInMs === 'number') overallTotalTimeMs += lData.timeSpentInMs;
+                });
+
+                let reportHtml = `
+                    <!DOCTYPE html>
+                    <html lang="he" dir="rtl"> 
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>BeRight! - דו"ח התקדמות</title>
+                        <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+                        <style>
+                            body { font-family: 'Assistant', Arial, sans-serif !important; direction: rtl !important; margin: 20px !important; background-color: #fff !important; color: #000 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                            h1, h2, h3, h4, h5 { color: #1e3a8a !important; margin-bottom: 8px !important; margin-top: 15px !important; }
+                            h1 { font-size: 24px !important; text-align: center !important; border-bottom: 2px solid #3b82f6 !important; padding-bottom: 10px !important; margin-bottom: 20px !important; }
+                            h2 { font-size: 20px !important; border-bottom: 1px solid #93c5fd !important; padding-bottom: 5px !important; }
+                            h3 { font-size: 16px !important; color: #1d4ed8 !important; }
+                            p { margin-bottom: 5px !important; font-size: 14px !important; line-height: 1.6 !important; }
+                            table.progress-table-print { width: 100% !important; border-collapse: collapse !important; margin-bottom: 20px !important; font-size: 12px !important; }
+                            table.progress-table-print th, table.progress-table-print td { border: 1px solid #ddd !important; padding: 8px !important; text-align: right !important; }
+                            table.progress-table-print th { background-color: #e0e7ff !important; font-weight: bold !important; }
+                            .ltr-print { direction: ltr !important; display: inline-block !important; text-align: left !important; font-family: Arial, sans-serif !important; }
+                            .focus-list-print { list-style-type: decimal !important; padding-right: 20px !important; margin-top: 5px !important; }
+                            .focus-list-print li { margin-bottom: 10px !important; background-color: #fef3c7 !important; padding: 8px !important; border-right: 3px solid #f59e0b !important; border-radius: 0.25rem !important; }
+                            .focus-list-print li p { margin-bottom: 3px !important; }
+                            .summary-section-print { background-color: #f3f4f6 !important; padding: 15px !important; border-radius: 8px !important; margin-bottom:20px !important; }
+                            .part-details-print { margin-bottom: 20px !important; page-break-inside: avoid !important; } 
+                            @media print {
+                                .no-print { display: none !important; } 
+                            }
+                        </style>
+                    </head>
+                    <body class="printable-report-body">
+                        <h1>דו"ח התקדמות - BeRight!</h1>
+                        <div class="summary-section-print">
+                            <h2>סיכום כללי</h2>
+                            <p><strong>שם התלמיד/ה:</strong> (ניתן להוסיף שם כאן)</p>
+                            <p><strong>תאריך הפקת הדו"ח:</strong> ${new Date().toLocaleDateString('he-IL')}</p>
+                            <p><strong>זמן למידה כולל:</strong> ${formatTime(overallTotalTimeMs)}</p>
+                            <p><strong>חלקים שהחלו:</strong> ${Object.keys(partProgressDataLocal).filter(ln => partProgressDataLocal[ln] && (partProgressDataLocal[ln].sectionsAttempted?.study || partProgressDataLocal[ln].sectionsAttempted?.test || partProgressDataLocal[ln].sectionsAttempted?.practice)).length}</p>
+                        </div>
+                        <h3>טבלת סיכום התקדמות בחלקים:</h3>
+                        <table class="progress-table-print">
+                            <thead><tr><th>חלק</th><th>זמן שהושקע</th><th>ציון במבחן</th><th>מספר טעויות</th></tr></thead>
+                            <tbody>`;
+                for (let i = 1; i <= 4; i++) {
+                    const partNumStr = String(i); 
+                    const lData = partProgressDataLocal[partNumStr]; 
+                    const partTitleDisplay = (allPartTitlesLocal && allPartTitlesLocal[partNumStr]) ? allPartTitlesLocal[partNumStr] : (lData && lData.title ? lData.title : `חלק ${partNumStr}`);
+                    if (lData && (lData.sectionsAttempted?.study || lData.sectionsAttempted?.test || lData.sectionsAttempted?.practice)) {
+                        reportHtml += `<tr><td>${partTitleDisplay}</td><td>${formatTimeMinutes(lData.timeSpentInMs)}</td><td>${lData.testScore !== null ? lData.testScore.toFixed(0) + '%' : 'לא נערך'}</td><td>${lData.mistakesDetail ? lData.mistakesDetail.length : '0'}</td></tr>`;
+                    } else {
+                        reportHtml += `<tr><td>${partTitleDisplay}</td><td colspan="3">טרם התחלת חלק זה</td></tr>`;
+                    }
+                }
+                reportHtml += `</tbody></table>`;
+                reportHtml += `<h2>פירוט ונושאים לחיזוק לפי חלק:</h2>`; 
+                let focusAreasExist = false;
+                for (const partNumKey in partProgressDataLocal) { 
+                    if (partProgressDataLocal.hasOwnProperty(partNumKey) && partProgressDataLocal[partNumKey]) {
+                        const partData = partProgressDataLocal[partNumKey]; 
+                        const partTitleDisplay = (allPartTitlesLocal && allPartTitlesLocal[partNumKey]) ? allPartTitlesLocal[partNumKey] : (partData.title || `חלק ${partNumKey}`);
+                        if (partData.mistakesDetail && partData.mistakesDetail.length > 0) {
+                            if(!focusAreasExist) focusAreasExist = true;
+                            reportHtml += `<div class="part-details-print"><h3>${partTitleDisplay}</h3><ul class="focus-list-print">`; 
+                            partData.mistakesDetail.forEach((mistake) => {
+                                const questionTextForPdf = mistake.questionText ? mistake.questionText.replace(/<[^>]*>?/gm, '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : `ID: ${mistake.questionId || 'לא ידוע'}`;
+                                const userAnswerForPdf = mistake.userAnswer ? String(mistake.userAnswer).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : 'N/A';
+                                const correctAnswerForPdf = mistake.correctAnswer ? String(mistake.correctAnswer).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : 'N/A';
+
+                                reportHtml += `<li>
+                                    <p><strong>שאלה:</strong> ${questionTextForPdf}</p>
+                                    <p><strong>תשובתך:</strong> <span class="ltr-print">${userAnswerForPdf}</span></p>
+                                    <p><strong>תשובה נכונה:</strong> <span class="ltr-print">${correctAnswerForPdf}</span></p>
+                                </li>`;
+                            });
+                            reportHtml += `</ul></div>`;
+                        } 
+                    }
+                }
+                 if (!focusAreasExist && Object.values(partProgressDataLocal).some(ld => ld && ld.testScore === 100)) {
+                     reportHtml += `<p>כל הכבוד! לא נמצאו טעויות בחלקים שהושלמו עם ציון מושלם.</p>`;
+                 } else if (!focusAreasExist && Object.keys(partProgressDataLocal).length > 0 && Object.values(partProgressDataLocal).some(ld => ld && ld.testScore !== null && ld.testScore < 100) ) {
+                     reportHtml += `<p>נמצאו חלקים עם טעויות, אך פירוט השאלות אינו זמין במלואו מנתונים קודמים. מומלץ לעיין בחלקים הרלוונטיים.</p>`;
+                 } else if (!focusAreasExist) {
+                     reportHtml += `<p>לא זוהו טעויות ספציפיות או שמבחנים טרם בוצעו.</p>`;
+                 }
+
+                reportHtml += `
+                    </body></html>`;
+
+                const printWindow = window.open('', '_blank');
+                if (printWindow) {
+                    printWindow.document.open();
+                    printWindow.document.write(reportHtml);
+                    printWindow.document.close();
+                    setTimeout(() => {
+                        try {
+                            printWindow.focus(); 
+                            printWindow.print();
+                        } catch (e) {
+                            console.error("Error focusing or printing window:", e);
+                            alert("שגיאה בעת ניסיון הדפסה. ייתכן שחוסם חלונות קופצים מנע את הפעולה.");
+                        }
+                    }, 750); 
+                } else {
+                    alert("לא ניתן היה לפתוח חלון הדפסה. אנא בדוק אם חוסם החלונות הקופצים שלך מאופשר.");
+                }
+
+            } catch (error) {
+                console.error("Error generating PDF report via browser print:", error);
+                alert("אירעה שגיאה בעת הכנת הדו\"ח להדפסה. בדוק את המסוף לפרטים נוספים.");
+            }
+        }
+
+        function filterLessons() {
+            const selectedLesson = document.getElementById('lesson-filter').value;
+            const progressContentArea = document.getElementById('progress-content-area');
+            if (!progressContentArea) { console.error("Progress content area not found."); return; }
+
+            if (selectedLesson === 'all') {
+                displayOverallProgress();
+            } else {
+                displayLessonProgress(selectedLesson);
+            }
+        }
+
+        function displayLessonProgress(lessonNumber) {
+            const progressContentArea = document.getElementById('progress-content-area');
+            if (!progressContentArea) { console.error("Progress content area not found."); return; }
+
+            let partProgressDataLocal = {}; 
+            try {
+                const storedProgressData = localStorage.getItem(PROGRESS_DATA_KEY_PROG);
+                if (storedProgressData) partProgressDataLocal = JSON.parse(storedProgressData);
+            } catch (e) {
+                console.error("Error parsing progress data from localStorage:", e);
+                progressContentArea.innerHTML = "<p>שגיאה בטעינת נתוני ההתקדמות.</p>";
+                return;
+            }
+
+            const allPartTitlesLocal = getAllPartTitles();
+            let progressHtml = `<h3 class='text-xl font-semibold mb-4 text-blue-700'>📊 סיכום התקדמות לשיעור ${lessonNumber}</h3>`;
+            progressHtml += `<table class='progress-table'><thead><tr><th>חלק</th><th>זמן שהושקע</th><th>ציון במבחן</th><th>מספר טעויות</th></tr></thead><tbody>`;
+
+            for (let i = 1; i <= 4; i++) {
+                const partKey = `${lessonNumber}-${i}`;
+                const lData = partProgressDataLocal[partKey];
+                const partTitleDisplay = (allPartTitlesLocal && allPartTitlesLocal[partKey]) ? allPartTitlesLocal[partKey] : `חלק ${i}`;
+
+                if (lData && (lData.sectionsAttempted?.study || lData.sectionsAttempted?.test || lData.sectionsAttempted?.practice)) {
+                    progressHtml += `<tr><td>${partTitleDisplay}</td><td>${formatTimeMinutes(lData.timeSpentInMs)}</td><td>${lData.testScore !== null ? lData.testScore.toFixed(0) + '%' : 'לא נערך'}</td><td>${lData.mistakesDetail ? lData.mistakesDetail.length : '0'}</td></tr>`;
+                } else {
+                    progressHtml += `<tr><td>${partTitleDisplay}</td><td colspan='3' class='text-slate-500'>טרם התחלת חלק זה</td></tr>`;
+                }
+            }
+
+            progressHtml += `</tbody></table>`;
+            progressContentArea.innerHTML = progressHtml;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                alert('You must be logged in to view this page.');
+                window.location.href = 'index.html';
+            } else {
+                const userData = JSON.parse(localStorage.getItem(currentUser));
+                if (userData) {
+                    document.getElementById('progress-content-area').innerHTML = `
+                        <h2 class="text-2xl font-bold text-blue-700 mb-4">Progress for ${currentUser.replace('user_', '')}</h2>
+                        <pre>${JSON.stringify(userData.progress, null, 2)}</pre>
+                    `;
+                }
+            }
+
+            const filterContainer = document.createElement('div');
+            filterContainer.className = 'filter-container mb-4';
+            filterContainer.innerHTML = `
+                <label for='lesson-filter' class='mr-2'>בחר שיעור:</label>
+                <select id='lesson-filter' class='p-2 border rounded' onchange='filterLessons()'>
+                    <option value='all'>כל השיעורים</option>
+                    ${Array.from({ length: 20 }, (_, i) => `<option value='${i + 1}'>שיעור ${i + 1}</option>`).join('')}
+                </select>
+            `;
+            document.querySelector('.main-container-progress').prepend(filterContainer);
+            displayOverallProgress();
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            generateProgressReport();
+        });
+    </script>
+</body>
+</html>

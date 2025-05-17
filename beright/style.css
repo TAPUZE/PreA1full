@@ -1,0 +1,557 @@
+/* General Body and Font Styles */
+body {
+    font-family: 'Assistant', sans-serif;
+    background-color: #f0f9ff; /* Light blue background */
+    direction: rtl; /* Default direction for the site */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.rtl {
+    direction: rtl;
+}
+
+.ltr {
+    direction: ltr;
+}
+
+/* Main container for round pages */
+.round-container, .main-container-progress {
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+@media (min-width: 768px) { /* md breakpoint */
+    .round-container {
+        padding: 2rem; /* md:p-8 */
+    }
+}
+
+
+/* Header Styles */
+header {
+    text-align: center;
+    margin-bottom: 1.5rem; /* mb-6 */
+}
+
+header h1 {
+    font-size: 2.25rem; /* text-4xl */
+    line-height: 2.5rem;
+    font-weight: bold;
+    color: #1d4ed8; /* text-blue-700 */
+}
+@media (min-width: 768px) { /* md breakpoint */
+    header h1 {
+        font-size: 3rem; /* md:text-5xl */
+        line-height: 1;
+    }
+    header h1 .text-2xl { /* For the rocket emoji span */
+        font-size: 1.875rem; /* md:text-3xl */
+    }
+}
+header .title-bounce {
+    animation: bounce 1s infinite;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(-5%); animation-timing-function: cubic-bezier(0.8,0,1,1); }
+    50% { transform: translateY(0); animation-timing-function: cubic-bezier(0,0,0.2,1); }
+}
+
+header p {
+    font-size: 1.125rem; /* text-lg */
+    color: #475569; /* text-slate-600 */
+    margin-top: 0.5rem; /* mt-2 */
+}
+
+/* Round Selector Buttons (on round pages, if kept) */
+#round-selector-links { /* Changed from #round-selector for clarity */
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem; /* gap-2 */
+    margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.btn-lesson-selector-link { /* For <a> tags */
+    background-color: #fbbf24; /* Amber-400 */
+    color: #78350f; /* Amber-900 */
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.1s;
+    border: 1px solid #f59e0b; /* Amber-500 */
+    text-decoration: none;
+}
+.btn-lesson-selector-link:hover {
+    background-color: #f59e0b; /* Amber-500 */
+}
+.btn-lesson-selector-link.active {
+    background-color: #d97706; /* Amber-600 */
+    color: white;
+    pointer-events: none; /* Disable click on active round link */
+}
+
+/* Add consistent button styles for part-selector links */
+.btn-part-selector-link {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #f0f8ff; /* Light blue background */
+    color: #333; /* Dark text */
+    text-decoration: none;
+    border: 2px solid #007acc; /* Blue border */
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-part-selector-link:hover {
+    background-color: #007acc; /* Blue background on hover */
+    color: #fff; /* White text on hover */
+}
+
+.btn-part-selector-link:active {
+    background-color: #005f99; /* Darker blue when active */
+}
+
+/* Round Info and Progress Bar */
+#round-info {
+    margin-bottom: 1.5rem; /* mb-6 */
+    text-align: center;
+}
+#round-info h2 {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 600; /* font-semibold */
+    color: #2563eb; /* text-blue-600 */
+}
+.progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-top: 0.5rem; /* mt-2 */
+    margin-bottom: 1rem;
+}
+.progress-bar {
+    height: 20px;
+    width: 0%; 
+    background-color: #4ade80; /* Green-400 */
+    text-align: center;
+    line-height: 20px;
+    color: white;
+    font-weight: bold;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Tabs */
+#tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem; /* gap-2 */
+    margin-bottom: 1.5rem; /* mb-6 */
+}
+.tab-button { /* Generic class for tab buttons */
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem;
+    padding-top: 0.5rem; /* py-2 */
+    padding-bottom: 0.5rem;
+    border-radius: 0.375rem; /* rounded-md */
+    font-weight: 600; /* font-semibold */
+    /* Styles from .btn */
+    border-radius: 0.5rem;
+    transition: background-color 0.3s, transform 0.1s;
+    cursor: pointer;
+    text-decoration: none; /* For <a> tags */
+    text-align: center;
+}
+.tab-button:active {
+    transform: scale(0.98);
+}
+.tab-active {
+    background-color: #2563eb; /* Blue-600 */
+    color: white;
+}
+.tab-inactive {
+    background-color: #dbeafe; /* Blue-100 */
+    color: #1e40af; /* Blue-800 */
+}
+.tab-inactive:hover {
+    background-color: #bfdbfe; /* Blue-200 */
+}
+
+
+/* Main Content Area Card */
+.card {
+    background-color: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    margin-bottom: 1.5rem;
+}
+
+/* Study Step Card */
+.study-step-card {
+    background-color: #fefce8; /* Yellow-50 */
+    border: 1px solid #fde047; /* Yellow-300 */
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.3s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.study-interactive-check {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #e0e0e0;
+}
+.hidden-content { 
+    display: none;
+    background-color: #e0f2fe; 
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+    border: 1px solid #bae6fd; 
+}
+
+
+/* Practice Card */
+.practice-card {
+    background-color: #f9fafb; /* Gray-50 */
+    border: 1px solid #e5e7eb; /* Gray-200 */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s ease-in-out;
+}
+.practice-card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+}
+
+/* Question Option Styling */
+.question-option {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #93c5fd; /* Blue-300 */
+    border-radius: 0.5rem;
+    text-align: right; 
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.question-option.ltr-option {
+    text-align: left;
+}
+.question-option:hover {
+    background-color: #eff6ff; /* Blue-50 */
+}
+.question-option.selected {
+    background-color: #60a5fa; /* Blue-400 */
+    color: white;
+    border-color: #2563eb; /* Blue-600 */
+}
+
+/* Feedback Animations and Styles */
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+.feedback-animation {
+    animation: popIn 0.3s ease-out forwards;
+}
+.feedback-correct {
+    color: #16a34a; /* Green-600 */
+    font-weight: bold;
+}
+.feedback-incorrect {
+    color: #dc2626; /* Red-600 */
+    font-weight: bold;
+}
+
+/* Word Buttons for Sentence Builder */
+.word-button {
+    background-color: #e0e7ff; /* Indigo-100 */
+    color: #3730a3; /* Indigo-800 */
+    padding: 0.25rem 0.75rem;
+    margin: 0.25rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    border: 1px solid #c7d2fe; /* Indigo-200 */
+    transition: background-color 0.2s;
+    display: inline-block;
+}
+.word-button:hover {
+    background-color: #c7d2fe; /* Indigo-200 */
+}
+.sentence-area {
+    min-height: 3rem;
+    border: 1px dashed #9ca3af; /* Gray-400 */
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    background-color: #f3f4f6; /* Gray-100 */
+    margin-top: 0.5rem;
+    direction: ltr; /* Sentences are LTR */
+}
+
+/* Drag and Drop Styles */
+.drop-zone {
+    display: inline-block;
+    width: 60px; 
+    height: 30px; 
+    border: 2px dashed #60a5fa; 
+    background-color: #eff6ff; 
+    margin: 0 5px;
+    text-align: center;
+    line-height: 26px; 
+    color: #3b82f6; 
+    font-weight: bold;
+    border-radius: 0.25rem;
+    vertical-align: middle; /* Align with text */
+}
+.draggable-verb {
+    padding: 0.25rem 0.5rem;
+    background-color: #facc15; /* yellow-400 */
+    color: #713f12; /* yellow-800 */
+    border: 1px solid #eab308; /* yellow-500 */
+    border-radius: 0.25rem;
+    cursor: grab;
+    margin: 0 0.25rem;
+    display: inline-block;
+}
+
+
+/* General Button Styles */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.1s;
+    cursor: pointer;
+    text-decoration: none; /* For <a> tags styled as buttons */
+}
+.btn:active {
+    transform: scale(0.98);
+}
+.btn-primary {
+    background-color: #2563eb; /* Blue-600 */
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #1d4ed8; /* Blue-700 */
+}
+.btn-primary:disabled {
+    background-color: #9ca3af; /* gray-400 */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.btn-secondary {
+    background-color: #60a5fa; /* Blue-400 */
+    color: white;
+    padding: 0.5rem 1rem; /* Smaller padding for secondary */
+}
+.btn-secondary:hover {
+    background-color: #3b82f6; /* Blue-500 */
+}
+.btn-secondary:disabled {
+    background-color: #cbd5e1; /* Gray-300 */
+    color: #94a3b8; /* Gray-400 */
+    cursor: not-allowed;
+}
+.btn-sm { /* For smaller buttons like in study steps */
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem; /* text-sm */
+}
+
+/* Logout button styles */
+.logout-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #f87171; /* Red-400 */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+.logout-button:hover {
+    background-color: #ef4444; /* Red-500 */
+}
+
+/* Navigation Buttons (Previous/Next) */
+#navigation-buttons {
+    margin-top: 1.5rem; /* mt-6 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#navigation-buttons.hidden,
+#study-navigation-controls.hidden {
+    display: none;
+}
+
+
+/* Progress Table Styling (for progress.html and in-app summary) */
+.progress-table {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+    font-size: 0.9rem; /* Slightly smaller font for table */
+}
+.progress-table th, .progress-table td {
+    border: 1px solid #d1d5db; /* Gray-300 */
+    padding: 0.5rem 0.75rem; /* Adjusted padding */
+    text-align: right;
+}
+.progress-table th {
+    background-color: #f3f4f6; /* Gray-100 */
+    font-weight: bold;
+}
+
+/* Focus Area List Styling (for progress.html and in-app summary) */
+.focus-area-list {
+    list-style-type: decimal;
+    padding-right: 2rem; /* Indent for RTL list */
+    margin-top: 0.5rem;
+}
+.focus-area-list li {
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    background-color: #fffbeb; /* Amber-50 */
+    border-right: 3px solid #f59e0b; /* Amber-500 */
+    border-radius: 0.25rem;
+}
+
+/* Download Buttons (on progress page) */
+.btn-download {
+    margin-top: 0.5rem;
+    margin-left: 0.5rem; /* For RTL, this will be right margin */
+}
+
+/* Input fields */
+input[type="text"].ltr, textarea.ltr {
+    direction: ltr;
+    text-align: left;
+}
+input[type="text"].rtl, textarea.rtl { /* Though default is RTL for body */
+    direction: rtl;
+    text-align: right;
+}
+input[type="text"], textarea {
+    border: 1px solid #d1d5db; /* gray-300 */
+    padding: 0.5rem; /* p-2 */
+    border-radius: 0.375rem; /* rounded-md */
+    width: 100%;
+    margin-bottom: 0.25rem; /* mb-1 */
+}
+
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+.sr-only { /* Screen-reader only */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Styles for print PDF */
+@media print {
+    body {
+        font-family: 'Assistant', Arial, sans-serif !important; /* Ensure font is print-friendly */
+        margin: 20px !important;
+        background-color: #fff !important; /* White background for print */
+        -webkit-print-color-adjust: exact !important; /* Ensure colors print in Chrome/Safari */
+        color-adjust: exact !important; /* Standard */
+    }
+    .round-container, .main-container-progress { /* main container on progress.html */
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        padding: 10px !important;
+        max-width: 100% !important;
+    }
+    header h1 {
+        font-size: 20pt !important;
+        color: #000 !important; /* Black for print */
+    }
+    header h1 span { color: #555 !important; }
+
+    .btn, .btn-lesson-selector-link, #round-selector-links, #tabs, #navigation-buttons,
+    .progress-bar-container .progress-bar, /* Hide visual progress bar, keep text if needed */
+    .title-bounce, .btn-download, #study-navigation-controls {
+        display: none !important;
+    }
+    .progress-bar-container {
+        background-color: transparent !important; /* Hide container if bar is hidden */
+        border: 1px solid #ccc;
+    }
+    .progress-bar::after { /* Show percentage as text if bar is hidden */
+        content: attr(data-progress-text);
+        color: #000;
+        display: block;
+        text-align: center;
+    }
+
+
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #eee !important;
+        padding: 10px !important;
+    }
+    .study-step-card, .practice-card {
+        background-color: #f9f9f9 !important;
+        border: 1px solid #ddd !important;
+    }
+    .progress-table th, .progress-table td {
+        border: 1px solid #bbb !important;
+        padding: 5px !important;
+        font-size: 9pt !important;
+    }
+    .progress-table th {
+        background-color: #eee !important;
+    }
+    .focus-area-list li {
+        background-color: #f0f0f0 !important;
+        border-right: 2px solid #aaa !important;
+    }
+    a { text-decoration: none; color: #007bff; }
+    a[href^="http"]:after { content: " (" attr(href) ")"; font-size: 0.8em; } /* Show external links */
+    .hidden-content { display: block !important; background-color: #f0f0f0 !important; border: 1px solid #ddd !important;} /* Show hidden content */
+
+    /* PDF Report Specific Styles from original JS */
+    .pdf-report-body h1, .pdf-report-body h2, .pdf-report-body h3, .pdf-report-body h4, .pdf-report-body h5 {
+        color: #1e3a8a !important; margin-bottom: 8px !important;
+    }
+    .pdf-report-body h1 { font-size: 24px !important; text-align: center !important; border-bottom: 2px solid #3b82f6 !important; padding-bottom: 10px !important; margin-bottom: 20px !important;}
+    .pdf-report-body h2 { font-size: 20px !important; margin-top: 20px !important; border-bottom: 1px solid #93c5fd !important; padding-bottom: 5px !important;}
+    .pdf-report-body h3 { font-size: 16px !important; color: #1d4ed8 !important; }
+    .pdf-report-body p { margin-bottom: 5px !important; font-size: 14px !important; line-height: 1.6 !important; }
+    .pdf-report-body table { width: 100% !important; border-collapse: collapse !important; margin-bottom: 20px !important; font-size: 12px !important; }
+    .pdf-report-body th, .pdf-report-body td { border: 1px solid #ddd !important; padding: 8px !important; text-align: right !important; }
+    .pdf-report-body th { background-color: #e0e7ff !important; font-weight: bold !important; }
+    .pdf-report-body .ltr { direction: ltr !important; display: inline-block !important; }
+    .pdf-report-body .focus-list { list-style-type: decimal !important; padding-right: 20px !important; margin-top: 5px !important; }
+    .pdf-report-body .focus-list li { margin-bottom: 8px !important; background-color: #fef3c7 !important; padding: 5px !important; border-right: 3px solid #f59e0b !important;}
+    .pdf-report-body .summary-section { background-color: #f3f4f6 !important; padding: 15px !important; border-radius: 8px !important; margin-bottom:20px !important; }
+    .pdf-report-body .round-details { margin-bottom: 20px !important; page-break-inside: avoid !important; }
+    print-color-adjust: exact !important; /* Ensure colors print correctly */
+    -webkit-print-color-adjust: exact !important; /* For Webkit browsers */
+}

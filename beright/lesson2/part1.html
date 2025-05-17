@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeRight! - שיעור 2, חלק 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-sky-100 min-h-screen flex flex-col items-center p-4">
+    <div class="round-container">
+        <header>
+            <h1 class="title-bounce">
+                BeRight! <span class="text-2xl md:text-3xl text-amber-500">🚀</span>
+            </h1>
+            <p class="text-lg text-slate-600 mt-2">שיעור 2: צלילי תנועות בסיסיים וקריאה עם מילים מוכרות</p>
+        </header>
+
+        <div id="part-selector-links" class="flex justify-center gap-2 mb-6">
+            <a href="part1.html" class="btn-part-selector-link">חלק 1</a>
+            <a href="part2.html" class="btn-part-selector-link">חלק 2</a>
+            <a href="part3.html" class="btn-part-selector-link">חלק 3</a>
+            <a href="part4.html" class="btn-part-selector-link">חלק 4</a>
+        </div>
+
+        <div id="round-info" class="mb-6 text-center">
+            <h2 class="text-2xl font-semibold text-blue-600" id="part-title">טוען כותרת חלק...</h2>
+            <div class="progress-bar-container mt-2">
+                <div id="progress-bar" class="progress-bar">0%</div>
+            </div>
+        </div>
+
+        <div id="tabs" class="flex justify-center gap-2 mb-6">
+            <button id="tab-study" class="tab-button tab-inactive">📖 לימוד</button>
+            <button id="tab-test" class="tab-button tab-inactive">📝 מבחן</button>
+            <button id="tab-practice" class="tab-button tab-inactive">💪 תרגול</button>
+            <a href="../progress.html?lesson=2" id="tab-progress" class="tab-button tab-inactive">📊 ההתקדמות בשיעור</a>
+        </div>
+
+        <main id="content-area" class="card">
+            <p>טוען תוכן...</p>
+        </main>
+
+        <div id="navigation-buttons" class="mt-6 flex justify-between items-center hidden">
+            <button id="prev-btn" class="btn btn-secondary hidden">הקודם</button>
+            <button id="next-btn" class="btn btn-primary">הבא</button>
+        </div>
+
+        <div class="text-center mt-6">
+            <a href="lesson2-menu.html" class="btn btn-secondary">חזרה לתפריט שיעור 2</a>
+        </div>
+
+        <div id="user-display" class="text-center text-lg font-semibold text-blue-600 my-4">טוען שם משתמש...</div>
+    </div>
+
+    <script>
+        // --- Data for Lesson 2, Part 1 ---
+        const lesson2Part1StudySteps = [ // Renamed for clarity
+            {
+                title: "חלק 1: הכרת 5 צלילי התנועות הבסיסיים",
+                content: `<p class="mb-2 text-lg">שלום! בשיעור 1 למדנו את כל אותיות האלפבית. היום, בשיעור 2, נתמקד בחמש אותיות התנועה העיקריות (Vowels): <span class="ltr text-xl font-bold text-red-500">A, E, I, O, U</span>.</p>
+                          <p class="mb-2 text-slate-700">לכל אות תנועה יש מספר צלילים אפשריים, אך בחלק זה נתמקד בחמישה צלילים בסיסיים וברורים, ונקביל אותם לתנועות המוכרות לנו מהשפה העברית. הכרת צלילים אלו תעזור לנו להתחיל לזהות אותם במילים ושמות באנגלית.</p>
+                          <p class="text-slate-700 font-semibold">אלו חמשת הצלילים הבסיסיים שנלמד בחלק זה:</p>
+                          <table class="w-full my-3 border-collapse border border-slate-300 text-slate-700 text-sm md:text-base">
+                            <thead>
+                              <tr class="bg-sky-100">
+                                <th class="border border-slate-300 p-2 rtl">אות תנועה (אנגלית)</th>
+                                <th class="border border-slate-300 p-2 rtl">הצליל שנלמד</th>
+                                <th class="border border-slate-300 p-2 rtl">מקבילה בעברית</th>
+                                <th class="border border-slate-300 p-2 rtl">דוגמה למילה בעברית</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr><td class="border border-slate-300 p-2 text-center ltr font-bold text-blue-600">A a</td><td class="border border-slate-300 p-2 text-center font-semibold">ah (אַ)</td><td class="border border-slate-300 p-2 text-center">פתח</td><td class="border border-slate-300 p-2 text-center"><strong>אַ</strong>רְנָב</td></tr>
+                              <tr><td class="border border-slate-300 p-2 text-center ltr font-bold text-blue-600">E e</td><td class="border border-slate-300 p-2 text-center font-semibold">eh (אֶ)</td><td class="border border-slate-300 p-2 text-center">סגול</td><td class="border border-slate-300 p-2 text-center"><strong>אֶ</strong>בֶן</td></tr>
+                              <tr><td class="border border-slate-300 p-2 text-center ltr font-bold text-blue-600">I i</td><td class="border border-slate-300 p-2 text-center font-semibold">ee (אִי)</td><td class="border border-slate-300 p-2 text-center">חיריק</td><td class="border border-slate-300 p-2 text-center"><strong>אִי</strong>ש</td></tr>
+                              <tr><td class="border border-slate-300 p-2 text-center ltr font-bold text-blue-600">O o</td><td class="border border-slate-300 p-2 text-center font-semibold">oh (אוֹ)</td><td class="border border-slate-300 p-2 text-center">חולם</td><td class="border border-slate-300 p-2 text-center"><strong>אוֹ</strong>ר</td></tr>
+                              <tr><td class="border border-slate-300 p-2 text-center ltr font-bold text-blue-600">U u</td><td class="border border-slate-300 p-2 text-center font-semibold">oo (אוּ)</td><td class="border border-slate-300 p-2 text-center">שורוק</td><td class="border border-slate-300 p-2 text-center"><strong>אוּ</strong>לָם</td></tr>
+                            </tbody>
+                          </table>
+                          <p class="text-slate-700">בשלבים הבאים נראה דוגמאות לכל צליל באמצעות שמות ומילים מוכרות, ונתרגל את זיהוי האות והצליל שלה.</p>`
+            },
+            // Add more study steps for Lesson 2 Part 1 here...
+            {
+                title: "סיום לימוד חלק 1 (שיעור 2)",
+                content: `<p class="mt-4 text-lg text-green-600 font-semibold">נהדר! סיימת ללמוד על 5 צלילי התנועות הבסיסיים.</p>
+                          <p class="text-slate-700">כעת, נעבור למבחן קצר לבדוק את מה שלמדנו.</p>`
+            }
+        ];
+
+        const lesson2Part1Data = { // Renamed for clarity
+            title: 'שיעור 2, חלק 1: הכרת 5 צלילי התנועות הבסיסיים',
+            sections: {
+                study: {
+                    title: '📖 לימוד: 5 צלילי תנועות בסיסיים וזיהויים בשמות ומילים',
+                    steps: lesson2Part1StudySteps
+                },
+                test: {
+                    title: '📝 מבחן: זיהוי 5 צלילי תנועות בסיסיים',
+                    questions: [
+                        { 
+                            id: "l2p1_tq1", 
+                            q: "איזה צליל עברי דומה לצליל של האות <strong class='ltr'>A</strong> כפי שלמדנו (לדוגמה, במילה <strong class='ltr'>Adam</strong>)?", 
+                            options: ["חיריק (אִי)", "פתח (אַ)", "חולם (אוֹ)"], 
+                            correct: "פתח (אַ)", 
+                            type: "mcq" 
+                        },
+                        { 
+                            id: "l2p1_tq2", 
+                            q: "הצליל של האות <strong class='ltr'>E</strong> כפי שלמדנו (לדוגמה, במילה <strong class='ltr'>Ben</strong>) דומה לצליל העברי:", 
+                            options: ["שורוק (אוּ)", "סגול (אֶ)", "פתח (אַ)"], 
+                            correct: "סגול (אֶ)", 
+                            type: "mcq" 
+                        },
+                        { 
+                            id: "l2p1_tq3", 
+                            q: "במילה <strong class='ltr'>D<u>i</u>na</strong>, איזה צליל אנגלי עושה האות <strong class='ltr'>i</strong> (כפי שלמדנו)?", 
+                            options: ["ah (אַ)", "ee (אִי)", "eh (אֶ)"], 
+                            correct: "ee (אִי)", 
+                            type: "mcq" 
+                        },
+                        {
+                            id: "l2p1_tq4",
+                            q: "השלם את אות התנועה החסרה בשם <span class='ltr'>R_n</span> (רון) כך שיישמע צליל <strong class='text-indigo-700'>אוֹ (oh)</strong>:",
+                            correct: "o", 
+                            type: "fill_single", 
+                            placeholder: "הקלד אות קטנה"
+                        },
+                        {
+                            id: "l2p1_tq5",
+                            q: "איזו מילה מכילה את הצליל <strong class='text-purple-700'>אוּ (oo)</strong> של U (כמו במילה <span class='ltr'>Ruth</span>)?",
+                            options: ["<span class='ltr'>cup</span>", "<span class='ltr'>bus</span>", "<span class='ltr'>flute</span>"],
+                            correct: "<span class='ltr'>flute</span>",
+                            type: "mcq"
+                        }
+                    ],
+                    instructions: "ענה על השאלות הבאות בנושא 5 צלילי התנועות הבסיסיים."
+                },
+                practice: {
+                    title: '💪 תרגול: 5 צלילי תנועות בסיסיים',
+                    activities: [
+                        { 
+                            id: "l2p1_pa1", 
+                            type: "fill_in_blank", 
+                            q: "בשם <span class='ltr'>Sara</span>, האות הראשונה <strong class='ltr'>A</strong> נשמעת כמו התנועה העברית __.", 
+                            correct: "פתח", 
+                            placeholder: "פתח/סגול/חיריק וכו'" 
+                        },
+                        { 
+                            id: "l2p1_pa2", 
+                            q: "בחר את המילה שבה האות <strong class='ltr'>E</strong> נשמעת כמו סגול (אֶ):", 
+                            options: ["<span class='ltr'>see</span>", "<span class='ltr'>Netta</span>", "<span class='ltr'>name</span>"], 
+                            correct: "<span class='ltr'>Netta</span>", 
+                            type: "mcq" 
+                        },
+                        {
+                            id: "l2p1_pa3",
+                            type: "fill_in_blank",
+                            q: "השלם את אות התנועה החסרה בשם <span class='ltr'>T_m</span> (תום) כך שיישמע צליל חולם (אוֹ):",
+                            correct: "o",
+                            placeholder: "a/e/i/o/u"
+                        }
+                    ],
+                    instructions: "תרגל את זיהוי 5 צלילי התנועות הבסיסיים במילים ושמות."
+                }
+            }
+        };
+
+        // This object is used by script.js to store ALL part titles for the global progress page.
+        // Each lesson part's logic file should define its own title here, plus any others it knows about.
+        // A more robust system might load this from a central JSON manifest or build it incrementally.
+        const allLessonPartsMasterData_L2P1 = { // Renamed for clarity within this file's scope
+            "L2P1": { title: lesson2Part1Data.title }, // Title for current Lesson 2, Part 1
+            "L2P2": { title: "שיעור 2, חלק 2: צלילי תנועות נוספים" },
+            "L2P3": { title: "שיעור 2, חלק 3: קריאת מילים קצרות" },
+            "L2P4": { title: "שיעור 2, חלק 4: סיכום ותרגול קריאה" },
+
+            // It's good practice to include titles from other lessons if this is meant to be a comprehensive list
+            // passed to storeAllPartTitles. However, this can also be built up by each lesson part.
+            "L4P1": { title: 'חלק 1: יסודות - "To Be" בהווה (אני, אתה, הוא/היא/זה)' },
+            "L4P2": { title: 'חלק 2: רבים ושלילה (We, They, Not)' },
+            "L4P3": { title: 'חלק 3: שאלות (Are you? Where is he?)' },
+            "L4P4": { title: 'חלק 4: "To Be" בעבר (Was, Were)' }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Corrected Initialization for Lesson 2, Part 1 ---
+            const uniquePartIdentifier = "L2P1"; // Unique ID for this specific part
+
+            if (typeof initializeCurrentPage === 'function') {
+                console.log(`Initializing Lesson 2, Part 1 with ID: ${uniquePartIdentifier}`);
+                // Arguments: pageType, partId (unique), partData (for this part), allMasterTitles
+                initializeCurrentPage('part', uniquePartIdentifier, lesson2Part1Data, allLessonPartsMasterData_L2P1);
+            } else {
+                console.error('Main script (initializeCurrentPage function) not found. Ensure script.js is loaded before this inline script.');
+                const contentArea = document.getElementById('content-area');
+                if(contentArea) contentArea.innerHTML = "<p>שגיאה קריטית בטעינת השיעור. בדוק את ה-console לשגיאות.</p>";
+            }
+        });
+    </script>
+    <script src="../script.js"></script>
+    <script src="lesson2.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          loadLesson2Part(1); // או "L2P1"
+      });
+    </script>
+    </body>
+</html>

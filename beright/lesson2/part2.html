@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeRight! - שיעור 2, חלק 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-sky-100 min-h-screen flex flex-col items-center p-4">
+    <div class="round-container">
+        <header>
+            <h1 class="title-bounce">
+                BeRight! <span class="text-2xl md:text-3xl text-amber-500">🚀</span>
+            </h1>
+            <p class="text-lg text-slate-600 mt-2">שיעור 2: צלילי תנועות בסיסיים וקריאה עם מילים מוכרות</p>
+        </header>
+
+        <div id="part-selector-links" class="flex justify-center gap-2 mb-6">
+            <a href="part1.html" class="btn-part-selector-link">חלק 1</a>
+            <a href="part2.html" class="btn-part-selector-link">חלק 2</a> <a href="part3.html" class="btn-part-selector-link">חלק 3</a>
+            <a href="part4.html" class="btn-part-selector-link">חלק 4</a>
+        </div>
+
+        <div id="round-info" class="mb-6 text-center">
+            <h2 class="text-2xl font-semibold text-blue-600" id="part-title">טוען כותרת חלק...</h2>
+            <div class="progress-bar-container mt-2">
+                <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-progress-text="0%">0%</div>
+            </div>
+        </div>
+
+        <div id="tabs" class="flex justify-center gap-2 mb-6">
+            <button id="tab-study" class="tab-button tab-inactive">📖 לימוד</button>
+            <button id="tab-test" class="tab-button tab-inactive">📝 מבחן</button>
+            <button id="tab-practice" class="tab-button tab-inactive">💪 תרגול</button>
+            <a href="../progress.html?lesson=L2" id="tab-progress" class="tab-button tab-inactive">📊 ההתקדמות בשיעור</a>
+        </div>
+
+        <main id="content-area" class="card">
+            <p>טוען תוכן...</p> </main>
+
+        <div id="navigation-buttons" class="mt-6 flex justify-between items-center hidden">
+            <button id="prev-btn" class="btn btn-secondary hidden">הקודם</button>
+            <button id="next-btn" class="btn btn-primary">הבא</button>
+        </div>
+        
+        <div class="text-center mt-6">
+            <a href="lesson2-menu.html" class="btn btn-secondary">חזרה לתפריט שיעור 2</a>
+        </div>
+
+        <div id="user-display" class="text-center text-lg font-semibold text-blue-600 my-4">טוען שם משתמש...</div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script src="lesson2.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          // או "L2P2"
+          loadLesson2Part(2);
+      });
+    </script>
+</body>
+</html>

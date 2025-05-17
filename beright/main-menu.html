@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeRight! - Main Menu</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="js/navigation.js"></script>
+</head>
+<body class="bg-sky-100 min-h-screen flex flex-col items-center p-4">
+    <a href="#" class="logout-button" onclick="handleLogout()">Logout</a>
+    <header class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-blue-700">BeRight! 🚀</h1>
+        <p class="text-lg text-slate-600">Choose a lesson to start learning:</p>
+    </header>
+    <main class="lesson-menu grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="lesson1/lesson1-menu.html" class="btn btn-primary">Lesson 1: Letters and Phonetics</a>
+        <a href="lesson2/lesson2-menu.html" class="btn btn-primary">Lesson 2: Vowels and Names</a>
+        <a href="lesson3/lesson3-menu.html" class="btn btn-primary">Lesson 3: Colors, Shapes, and Numbers</a>
+        <a href="lesson4/lesson4-menu.html" class="btn btn-primary">Lesson 4: To Be</a>
+        <!-- Add more lessons as needed -->
+    </main>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeRight! - חלק 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-sky-100 min-h-screen flex flex-col items-center p-4">
+    <a href="#" class="logout-button" onclick="handleLogout()">Logout</a>
+
+    <div class="round-container">
+        <header>
+            <h1 class="title-bounce">
+                BeRight! <span class="text-2xl md:text-3xl text-amber-500">🚀</span>
+            </h1>
+            <p class="text-lg text-slate-600 mt-2">המסע שלכם לכיבוש הפועל "To Be" באנגלית!</p>
+        </header>
+
+        <div id="part-selector-links" class="flex justify-center gap-2 mb-6">
+            <a href="part1.html" class="btn-part-selector-link">חלק 1</a>
+            <a href="part2.html" class="btn-part-selector-link">חלק 2</a>
+            <a href="part3.html" class="btn-part-selector-link">חלק 3</a>
+            <a href="part4.html" class="btn-part-selector-link">חלק 4</a>
+        </div>
+
+        <div id="round-info" class="mb-6 text-center">
+            <h2 class="text-2xl font-semibold text-blue-600" id="part-title">טוען כותרת חלק...</h2>
+            <div class="progress-bar-container mt-2">
+                <div id="progress-bar" class="progress-bar">0%</div>
+            </div>
+        </div>
+
+        <div id="tabs" class="flex justify-center gap-2 mb-6">
+            <button id="tab-study" class="tab-button tab-inactive">📖 לימוד</button>
+            <button id="tab-test" class="tab-button tab-inactive">📝 מבחן</button>
+            <button id="tab-practice" class="tab-button tab-inactive">💪 תרגול</button>
+            <a href="../progress.html?lesson=4" id="tab-progress" class="tab-button tab-inactive">📊 ההתקדמות</a>
+        </div>
+
+        <main id="content-area" class="card">
+            <p>טוען תוכן...</p>
+        </main>
+
+        <div id="navigation-buttons" class="mt-6 flex justify-between items-center hidden">
+            <button id="prev-btn" class="btn btn-secondary hidden">הקודם</button>
+            <button id="next-btn" class="btn btn-primary">הבא</button>
+        </div>
+
+        <div class="text-center mt-6">
+            <a href="lesson4-menu.html" class="btn btn-secondary">חזרה לתפריט השיעור</a>
+        </div>
+    </div>
+
+    <script>
+        // --- Data for Part 1 ---
+        const part1StudySteps = [
+            {
+                title: "ברוכים הבאים לחלק 1!",
+                content: `<p class="mb-2 text-lg">נתחיל עם הפועל החשוב <strong>"to be"</strong> (להיות) בזמן הווה.</p>
+                          <p class="mb-3 text-slate-700">באנגלית, אנחנו <strong>תמיד</strong> צריכים להשתמש בפועל הזה כדי לתאר מישהו או משהו.</p>`
+            },
+            {
+                title: "הבדל חשוב: עברית ואנגלית",
+                content: `<div class="p-3 bg-indigo-50 rounded-lg mt-1 mb-3 border border-indigo-200">
+                            <h5 class="font-semibold text-indigo-700 mb-1">הערה חשובה:</h5>
+                            <p class="text-sm text-slate-700">בעברית, במשפטי תיאור בזמן הווה, לרוב משמיטים פועל מקביל (למשל, "אני מורה").</p>
+                            <button class="btn btn-secondary btn-sm text-xs mt-1" onclick="toggleElementVisibility('r1s1ex1')">הצג דוגמה</button>
+                            <div id="r1s1ex1" class="hidden-content text-sm text-slate-600">
+                                "אני מורה." (באנגלית: <span class="ltr">I <strong>am</strong> a teacher.</span>)
+                            </div>
+                            <p class="text-sm text-slate-700 mt-2">אבל באנגלית, חייבים להשתמש ב-<span class="ltr font-semibold">am, is, are</span> בהווה!</p>
+                        </div>`
+            },
+            {
+                title: `הפועל "to be" עם <span class="ltr">"I"</span>`,
+                content: `<div class="p-4 bg-sky-50 rounded-lg mb-2">
+                            <h4 class="font-semibold text-blue-700 mb-2 text-xl">אני <span class="text-xl text-amber-500 font-mono">➔</span> <strong class="ltr">I am</strong></h4>
+                            <p class="text-slate-700">דוגמה: <span class="ltr">I <strong>am</strong> happy.</span> (אני שמח/שמחה)</p>
+                        </div>
+                        <div class="study-interactive-check">
+                            <p class="text-sm font-medium text-slate-700">בדוק הבנה: השלם את החסר: <span class="ltr">I ___ a student.</span></p>
+                            <input type="text" id="r1s2_check" class="ltr border border-gray-300 p-1 rounded-md my-1 w-20 text-center">
+                            <button class="btn btn-secondary btn-sm text-xs" onclick="checkStudyStepAnswer('r1s2_check', 'am', 'r1s2_feedback')">בדוק</button>
+                            <div id="r1s2_feedback" class="text-sm mt-1 feedback-animation"></div>
+                        </div>`
+            },
+            {
+                title: `הפועל "to be" עם <span class="ltr">"He / She / It"</span>`,
+                content: `<div class="p-4 bg-sky-50 rounded-lg mb-2">
+                            <h4 class="font-semibold text-blue-700 mb-2 text-xl">הוא/היא/זה <span class="text-xl text-amber-500 font-mono">➔</span> <strong class="ltr">He/She/It is</strong></h4>
+                            <p class="text-slate-700">דוגמה (He): <span class="ltr">He <strong>is</strong> tall.</span> (הוא גבוה)</p>
+                            <button class="btn btn-secondary btn-sm text-xs mt-1" onclick="toggleElementVisibility('r1s3ex_she')">עוד דוגמאות</button>
+                            <div id="r1s3ex_she" class="hidden-content text-sm text-slate-600">
+                                <p>דוגמה (She): <span class="ltr">She <strong>is</strong> a doctor.</span> (היא רופאה)</p>
+                                <p>דוגמה (It): <span class="ltr">It <strong>is</strong> a book.</span> (זה ספר)</p>
+                            </div>
+                        </div>
+                        <div class="study-interactive-check">
+                            <p class="text-sm font-medium text-slate-700">בדוק הבנה: <span class="ltr">The cat (it) ___ black.</span></p>
+                            <button class="btn btn-secondary btn-sm text-xs mx-1" onclick="checkStudyStepAnswerDirect('is', 'is', 'r1s3_feedback')">is</button>
+                            <button class="btn btn-secondary btn-sm text-xs mx-1" onclick="checkStudyStepAnswerDirect('are', 'is', 'r1s3_feedback')">are</button>
+                            <div id="r1s3_feedback" class="text-sm mt-1 feedback-animation"></div>
+                        </div>`
+            },
+            {
+                title: `הפועל "to be" עם <span class="ltr">"You / We / They"</span>`,
+                content: `<div class="p-4 bg-sky-50 rounded-lg mb-2">
+                            <h4 class="font-semibold text-blue-700 mb-2 text-xl">אתה/את/אנחנו/הם <span class="text-xl text-amber-500 font-mono">➔</span> <strong class="ltr">You/We/They are</strong></h4>
+                            <p class="text-slate-700">דוגמה (You): <span class="ltr">You <strong>are</strong> kind.</span> (אתה נחמד)</p>
+                            <p class="text-slate-700">דוגמה (We): <span class="ltr">We <strong>are</strong> friends.</span> (אנחנו חברים)</p>
+                            <p class="text-slate-700">דוגמה (They): <span class="ltr">They <strong>are</strong> students.</span> (הם תלמידים)</p>
+                        </div>`
+            },
+            {
+                title: "קיצורים נפוצים (Contractions)",
+                content: `<div class="p-4 bg-amber-50 rounded-lg">
+                            <h4 class="font-semibold text-amber-700 mb-2 text-xl">קיצורים:</h4>
+                            <p class="mb-2 text-slate-700">באנגלית אוהבים לקצר! לדוגמה:</p>
+                            <ul class="list-disc list-inside space-y-1 text-slate-700 ltr">
+                                <li>I am <span class="text-lg text-amber-500 font-mono">➔</span> I'm</li>
+                                <li>He is <span class="text-lg text-amber-500 font-mono">➔</span> He's</li>
+                                <li>She is <span class="text-lg text-amber-500 font-mono">➔</span> She's</li>
+                                <li>It is <span class="text-lg text-amber-500 font-mono">➔</span> It's</li>
+                                <li>You are <span class="text-lg text-amber-500 font-mono">➔</span> You're</li>
+                                <li>We are <span class="text-lg text-amber-500 font-mono">➔</span> We're</li>
+                                <li>They are <span class="text-lg text-amber-500 font-mono">➔</span> They're</li>
+                            </ul>
+                        </div>`
+            },
+            {
+                title: "סיימנו ללמוד את היסודות!",
+                content: `<p class="mt-4 text-lg text-green-600 font-semibold">כל הכבוד! סיימת את חלק הלימוד לחלק זה.</p>
+                          <p class="text-slate-700">בשלב הבא, נעבור למבחן קצר כדי לראות מה למדנו!</p>`
+            }
+        ];
+
+        const part1Data = {
+            title: 'חלק 1: יסודות - "To Be" בהווה (אני, אתה, הוא/היא/זה)',
+            sections: {
+                study: {
+                    title: '📖 לימוד: הפועל "To Be" בהווה',
+                    steps: part1StudySteps
+                },
+                test: {
+                    title: '📝 מבחן: בואו נבדוק מה למדנו!',
+                    questions: [
+                        { id: "r1_tq1", q: "<span class='ltr'>I ___ a teacher.</span>", options: ["am", "is", "are"], correct: "am", type: "mcq", sentenceParts: ["I ", " a teacher."] },
+                        { id: "r1_tq2", q: "<span class='ltr'>She ___ happy.</span>", options: ["am", "is", "are"], correct: "is", type: "mcq", sentenceParts: ["She ", " happy."] },
+                        { id: "r1_tq3", q: "<span class='ltr'>It ___ a cat.</span>", options: ["am", "is", "are"], correct: "is", type: "mcq", sentenceParts: ["It ", " a cat."] },
+                        { id: "r1_tq4", q: "<span class='ltr'>You ___ smart.</span>", options: ["am", "is", "are"], correct: "are", type: "mcq", sentenceParts: ["You ", " smart."] },
+                        { id: "r1_tq5", q: "השלם את החסר: <span class='ltr'>He ___ a boy.</span>", correct: "is", type: "fill_single", hint: "הקלד את המילה החסרה (am, is, or are)", placeholder: "is", sentenceParts: ["He ", " a boy."] },
+                        { id: "r1_tq6", q: "איזה משפט נכון?", options: ["<span class='ltr'>She a doctor.</span>", "<span class='ltr'>She is a doctor.</span>", "<span class='ltr'>She am a doctor.</span>"], correct: "<span class='ltr'>She is a doctor.</span>", type: "mcq" },
+                        { id: "r1_tq7", q: "בחר את התשובה הנכונה למשפט: (תמונה של שמש ☀️) <span class='ltr'>It ___ sunny today.</span>", options: ["am", "is", "are"], correct: "is", type: "mcq", sentenceParts: ["It ", " sunny today."] }
+                    ],
+                    instructions: "בחרו או השלימו את התשובה הנכונה לכל שאלה. בהצלחה!"
+                },
+                practice: {
+                    title: '💪 תרגול: מחזקים את הידע!',
+                    activities: [
+                        { id: "r1_pa1", type: "sentencebuilder", q: "סדר את המילים למשפט נכון:", words: ["happy", "I", "am"], correctSentence: "I am happy"},
+                        { id: "r1_pa2", type: "fill_in_blank", q: "השלם את הפועל הנכון: <span class=\"ltr\">The dog ___ friendly.</span>", correct: "is", placeholder: "am/is/are" },
+                        { id: "r1_pa3", type: "sentencebuilder", q: "סדר את המילים למשפט נכון:", words: ["a", "It", "book", "is"], correctSentence: "It is a book"},
+                        { id: "r1_pa4", type: "fill_in_blank", q: "השלם את הפועל הנכון: <span class=\"ltr\">You ___ a good student.</span>", correct: "are", placeholder: "am/is/are" }
+                    ],
+                    instructions: "מעולה! עכשיו בואו נתרגל עוד. התרגול הזה יתמקד בטעויות מהמבחן (אם היו) ובעוד דוגמאות."
+                }
+            }
+        };
+        // Data for ALL parts - needed for storing titles in localStorage for the progress page
+        // Ideally, this would be fetched or managed more centrally in a larger app,
+        // but for this structure, the first part loaded can initialize it.
+        const allPartsMasterData = {
+            1: { title: part1Data.title },
+            // Titles for other parts - these would be defined in their respective files too
+            // but we need a way for progress.html to access them without loading all part files.
+            2: { title: 'חלק 2: רבים ושלילה (We, They, Not)' },
+            3: { title: 'חלק 3: שאלות (Are you? Where is he?)' },
+            4: { title: 'חלק 4: "To Be" בעבר (Was, Were)' }
+        };
+
+    </script>
+    <script src="../script.js"></script>
+    <script src="lesson4.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the page with Part 1 data
+            initializeCurrentPage('part', 1, part1Data, allPartsMasterData);
+        });
+    </script>
+</body>
+</html>
